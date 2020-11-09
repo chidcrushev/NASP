@@ -1,0 +1,29 @@
+{
+  "name": "nasp",
+  "version": "1.0.0",
+  "description": "A web application portal to conduct auction for NMSU students",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chidcrushev/NASP.git"
+  },
+  "keywords": [
+    "nasp",
+    "web",
+    "app",
+    "node",
+    "js",
+    "express"
+  ],
+  "author": "JunYong Lee, Raksha Gala, Noor,  Harrison, Chidambaram Crushev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chidcrushev/NASP/issues"
+  },
+  "homepage": "https://github.com/chidcrushev/NASP#readme"
+}
