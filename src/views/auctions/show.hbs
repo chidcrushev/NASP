@@ -1,0 +1,55 @@
+{{>header}}	
+<div class="row">
+	<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+		<div class="col-6"> 
+		    <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+			      <div class="my-3 py-3">
+			        <h2 class="display-5">{{name}}</h2>
+			        <img class="image" src="{{image}}" width="400px" height="300px">
+			        <form action="/auctions/{{id}}?_method=DELETE" method= "POST">
+						<button class="btn btn-danger mt-3"> Delete Auction</button>
+					</form>	
+			      </div>
+		    </div>
+		</div>
+		<div class="col-6"> 
+		    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center">
+		      <div class="my-3 py-3">
+		        <h2 class="display-5">Current Bid</h2>
+		        <h3 class="display-5">$ {{price}}</h3>
+		        <h4>
+		            <div >
+		             <!-- <img src="person.png" width="50px" height="50px"> -->
+		            
+		              <h4> Auctioneer</h4>
+		              <p> Sam Smith</p>
+		              <p> Rating : 4.8 </p>
+		            </div>
+		            <div style="clear: right;"/>
+		        </h4>
+		        <form  >
+		          <label for="fname">My Bid:</label><br>
+		          <input class="input" "type="text" id="fname" name="fname"><br>
+		          <input class="input" type="submit" value="Bid!">
+		        </form>
+		      </div>
+		    </div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+    <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+      <div class="my-3 py-3">
+        <h2 class="display-5">Description</h2>
+        <p class="lead">{{description}}</p>        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card-body">
+	<!-- <a class = "card-link btn btn-info" href="/auctions/{{id}}/edit"> Edit</a> -->			
+</div>
+	
+{{>footer}}

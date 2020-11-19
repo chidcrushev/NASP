@@ -1,0 +1,41 @@
+{{>header}}	
+
+<div class="row ml-5 mt-4">
+	<h1>Create an auction</h1>
+	<div class="col-6 offer-3">
+		<form action = "/auctions" method ="POST" class="validate-form" novalidate>
+			<!-- product name -->
+			<div class="mb-4">
+				<label class = "form-label" for= "title">Auction title:</label>
+				<input class= "form-control" type="text" id="title" name="auction[name]" required>
+			</div>
+
+			<!-- describtion -->
+			<div class="mb-4">
+				<label class = "form-label" for= "description">Description: </label>
+				<textarea class= "form-control" type="text" id="description" name="auction[description]"  required></textarea>
+			</div>
+
+			<!-- price -->
+			<div class="mb-4">
+				<label class = "form-label" for= "price">Price: </label>
+				<div class="input-group">
+					<span class="input-group-text" id="price-label">$</span>
+  					<input type="text" class="form-control" id="price" placeholder="0" aria-label="Amount (to the nearest dollar)" 
+					aria-describedby="price-label" name="auction[price]"  required>			
+				</div>
+			</div>
+
+			<!-- image -->
+			<div class="mb-4">
+				<label class = "form-label" for= "image">Image url: </label>
+				<input class= "form-control" type="text" id="image" name="auction[image]"  required>
+			</div>
+			<div class="mb-3">
+				<button class = "btn btn-success">Create the auction</button>
+			</div>
+		</form>
+		
+	</div>
+</div>
+{{>footer}}

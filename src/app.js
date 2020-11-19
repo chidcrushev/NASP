@@ -13,7 +13,7 @@ const mongoose      = require("mongoose");
 const passport    	= require("passport");
 const LocalStrategy = require("passport-local");
 const User          = require("../models/user");
-
+const methodOverride = require("method-override");
 
 // mongo DB
 mongoose.connect('mongodb://localhost:27017/NASP_DB', {
@@ -29,9 +29,12 @@ db.once("open", () => {
 });
 // end mongo DB
 
+
 // Static folder
 app.use(express.static(path.join(__dirname, 'src'), {extensions: ['html', 'htm']}) );
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+
 // passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -41,29 +44,28 @@ passport.deserializeUser(User.deserializeUser());
 // end passport 
 
 app.use((req, res, next) => {
-    console.log(req.session)
+   // console.log(req.session)
     res.locals.currentUser = req.user;
     //res.locals.success = req.flash('success');
     //res.locals.error = req.flash('error');
     next();
 })
 
-
 //Setting up handlebars.
 app.engine('hbs', hbs({
    extname: 'hbs',
-   defaultLayout:  path.join(__dirname, './views/main') 
+   defaultLayout:  path.join(__dirname, './views/main'),
+   partialsDir  : [
+        //  path to your partials
+        path.join(__dirname, 'views/partials'),
+    ] 
 
 }))
-app.set('view engine', 'hbs');
-
 
 //Setting up routing
 app.use('/', router);
+app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
-
-
-
 
 // Start the server 
 http.listen(port, () => console.log(`Server is listening on port ${port}`));  

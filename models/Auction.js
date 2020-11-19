@@ -1,16 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const passportLocalMongoose = require("passport-local-mongoose");
 
-const User = new Schema ({
-	email:{
-		type:String,
-		required: true,
-		unique : true
-	}
+const AuctionSchema = new Schema ({
+	
+	name: String,
+	price: Number,
+	description : String,
+	image: String
+
 });
 
-// automatically has username and password
-User.plugin(passportLocalMongoose);
-
-module.exports = mongoose.model("User", User);
+module.exports = mongoose.model("Auction", AuctionSchema);
