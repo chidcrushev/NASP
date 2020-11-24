@@ -1,7 +1,17 @@
 <html>
 <head>
-
+    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
+        .container {
+            margin-right : 20rem;
+            margin-left: 10rem;
+        }
+
+
         .roundedimg {
             border-radius: 50%;
         }
@@ -40,6 +50,17 @@
             margin-right: 50px;
             float: left;
         }
+        .btn-secondary {
+            border-radius: 100px;
+            background: #fff;
+            padding: 15px;
+            width: 150px;
+            height: 50px;
+            border: 1px solid #7d6a6a;
+            margin-right: 50px;
+            float: left;
+            color: black;
+        }
 
         .JoinButtonRounded {
             border-radius: 100px;
@@ -60,10 +81,151 @@
             margin-right: 50px;
             color: #9b5609;
         }
+
+        .nav-item {
+            margin-left: 2rem;
+            margin-right: 2rem;
+        }
+
+        /*********************************************************/
+        .search_input{
+            color: white;
+            border: 0;
+            outline: 0;
+            background: none;
+            width: 0;
+            caret-color:transparent;
+            line-height: 40px;
+            transition: width 0.4s linear;
+        }
+
+        .searchbar:hover > .search_input{
+            padding: 0 10px;
+            width: 450px;
+            caret-color:rgb(235, 230, 230);
+            transition: width 0.4s linear;
+        }
+
+        .searchbar:hover > .search_icon{
+            background: white;
+            color: #04ac5d;
+        }
+
+        .search_icon{
+            height: 40px;
+            width: 40px;
+            float: right;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            color:rgb(70, 67, 67);
+            text-decoration:none;
+        }
+        .bottom-items {
+            position : absolute;
+            padding: 10px;
+            bottom : 5;
+            margin-left: 35px;
+            
+        }
+
     </style>
 </head>
+
+
 <body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        
+            <ul class="navbar-nav mr-auto">
+                <a href="/">
+                    <div class="logo-image">
+                        <img src="./img/shoppingbag.png" alt="ShopingBag" style="width:24px;position: absolute;margin: 8px;">
+                    </div>
+                </a>
+
+                <li class="nav-item active">
+                    
+                    
+                    <a class="nav-link" href="#">NASP</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Reviews</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Actions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
+                </li>
+
+                <div class="d-flex justify-content-center h-100">
+                    <div class="searchbar">
+                      <input class="search_input" type="text" name="" placeholder="Search...">
+                      <button type="submit" class="search_icon"><i class="fa fa-search"></i></button>
+                    </div>
+                  </div>
+            </ul>
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Suppot</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Log out</a>
+                </li>
+            </ul>
+            
+ 
+            
+    </nav>
+    
     <div>
+        <div class="Main" style="float:left; background-color:#545871;height:100%;width:9%">
+            
+            <div style="color:#989aaa;font-weight:1000;text-align: center;margin: 20px -5px 10px 0;">
+                SERVICES
+            </div>
+            <div class="WhiteFontColor otherLink">
+                Buy
+            </div>
+            <div class="WhiteFontColor otherLink">
+                Sell
+            </div>
+
+            <div style="color:#989aaa;font-weight:1000;text-align: center;margin: 20px -5px 10px 0;">
+                Price Range
+            </div>
+            <div class="WhiteFontColor otherLink">
+                <input type="text" class="InputcornersRounded" placeholder="Minimun" style="color:#989aaa" />
+            </div>
+            <div style="color:#989aaa;font-weight:1000;text-align: center;margin: 20px -5px 10px 0;">
+                to
+            </div>
+            <div class="WhiteFontColor otherLink">
+                <input type="text" class="InputcornersRounded" placeholder="Maximum" style="color:#989aaa" />
+            </div>
+
+            <div class="bottom-items">
+                <div class="WhiteFontColor otherLink" style="margin-top: 250px;">
+                    Support
+                </div>
+                <div class="WhiteFontColor otherLink">
+                    Sign out
+                </div>
+            </div>
+
+            
+        </div>
+
+
+
+
+<!-- Raksha's original code here----------------------------------------------------------------------------------------------------------->    
+    <!-- <div>
         <div class="Main" style="float:left; background-color:#545871;height:100%;width:9%">
             <div style="overflow:hidden">
                 <div class="Menudiv">
@@ -107,86 +269,85 @@
                     Sign out
                 </div>
             </div>
-        </div>
+        </div> -->
+
+
+
+        
         <div class="ShoppingProduct" style="background-color:#f4e6d9;height:100%;width:100%">
             <div id="MeinMenu" style="overflow:hidden">
-                <div class="Menudiv" style="padding:10px;">
-                    <div style="margin-left:700px;">
+                
+                    <!-- <div style="margin-left:700px;">
                         <span class="MenuSpace"> Home</span> <span class="MenuSpace"> Reviews</span> <span class="MenuSpace"> Actions</span><span class="MenuSpace"> Profile</span>
-                    </div>
-                </div>
+                    </div> -->
 
-                <div class="WhiteFontColor otherLink" style="margin: 50px 0px 200px 200px;">
-                    <div class="SubMenuRounded" style="color:#989aaa"> Furniture</div>
-                    <div class="SubMenuRounded" style="color:#989aaa;background-color:#684545"> Electronics</div>
-                    <div class="SubMenuRounded" style="color:#989aaa"> Clothing</div>
-                    <div class="SubMenuRounded" style="color:#989aaa"> Textboxes</div>
-                    <div class="SubMenuRounded" style="color:#989aaa"> other</div>
-                </div>
+          
 
 
-                <div style="margin: 150px;width:100%;">
+                <div class="button-group" style="margin: 70px 0px 200px 200px;">
 
-                    <!--<div style="float:left">Test 1</div>
-    <div >Test 2</div>-->
-
-
-
-                    <div style="float:left;width:25%">
-                        <div style="width:250px;height:250px;background:white; text-align:center;">
-                            <div>
-                                <img class="roundedimgProduct" src="../Test  Project/img/Cloths.jpg" alt="ShopingBag" style="position: absolute;top: 220px;left:330px">
-                            </div>
-                            <div style="padding-top: 130px;color:#545871;font-weight:bolder;font-size:larger">Cloths</div>
-                            <div style="color:#545871;">Time : 3:00 PM</div>
-                            <div>
-                                &nbsp;
-                            </div>
-                            <div style="background-color: #F0F1F7;height: 45px;padding: 10px;">
-                                <div style="float:left;text-align:center;margin: 10px;color:#545871;font-weight:bolder;font-size:larger;background-color:#F0F1F7;"> $ 15</div>
-                                <div class="JoinButtonRounded" style="color:#545871;overflow:hidden; text-align:center;"> Join</div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div style="width:25%;float:left;">
-                        <div style="width:250px;height:250px;background:white; text-align:center">
-                            <div>
-                                <img class="roundedimgProduct" src="../Test  Project/img/Cloths.jpg" alt="ShopingBag" style="position: absolute;top: 220px;left:625px">
-                            </div>
-                            <div style="padding-top: 130px;color:#545871;font-weight:bolder;font-size:larger">Laptop</div>
-                            <div style="color:#545871;">Time : 5:00 PM</div>
-                            <div>
-                                &nbsp;
-                            </div>
-                            <div style="background-color: #F0F1F7;height: 45px;padding: 10px;">
-                                <div style="float:left;text-align:center;margin: 10px;color:#545871;font-weight:bolder;font-size:larger;background-color:#F0F1F7;"> $ 2000</div>
-                                <div class="JoinButtonRounded" style="color:#545871;overflow:hidden; text-align:center;"> Join</div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div style="width:25%;overflow:hidden;">
-                        <div style="width:250px;height:250px;background:white; text-align:center">
-                            <div>
-                                <img class="roundedimgProduct" src="../Test  Project/img/Cloths.jpg" alt="ShopingBag" style="position: absolute;top: 220px;left:920px">
-                            </div>
-                            <div style="padding-top: 130px;color:#545871;font-weight:bolder;font-size:larger">Wathc</div>
-                            <div style="color:#545871;">Time : 6:00 PM</div>
-                            <div>
-                                &nbsp;
-                            </div>
-                            <div style="background-color: #F0F1F7;height: 45px;padding: 10px;">
-                                <div style="float:left;text-align:center;margin: 10px;color:#545871;font-weight:bolder;font-size:larger;background-color:#F0F1F7;"> $ 45</div>
-                                <div class="JoinButtonRounded" style="color:#545871;overflow:hidden; text-align:center;"> Join</div>
-                            </div>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-secondary">Furniture</button>
+                    <button type="button" class="btn btn-secondary"> Electronics</button>
+                    <button type="button" class="btn btn-secondary">Clothing</button>
+                    <button type="button" class="btn btn-secondary"> Textboxes</button>
+                    <button type="button" class="btn btn-secondary">Others</button>
 
                 </div>
+                
+
+                <!--<div style="margin: 150px;width:100%;">-->
+
+                    <!-- The items will be listed here from Database-->
+                    <div class="container">
+                        
+                        
+                        <div class="row">
+                            <!-- Example item1-->
+                            <div class="col-md-4 col-sm-6">
+                                
+                                <div class="card" style="width:18rem">
+                                    <img class="card-img-top" src="./img/Cloths.jpg" alt="Card image" style="width:100%">
+                                    <div class="card-body">
+                                    <h4 class="card-title">Clothes</h4>
+                                    <p class="card-text">Item description will be here</p>
+                                    <a href="#" class="btn btn-primary">View</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                             <!-- Example item1-->
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card" style="width:18rem">
+                                    <img class="card-img-top" src="./img/Cloths.jpg" alt="Card image" style="width:100%">
+                                    <div class="card-body">
+                                    <h4 class="card-title">Clothes</h4>
+                                    <p class="card-text">Item description will be here</p>
+                                    <a href="#" class="btn btn-primary">View</a>
+                                    </div>
+                                </div>
+                            </div>
+        
+                             <!-- Example item1-->
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card" style="width:18rem">
+                                    <img class="card-img-top" src="./img/Cloths.jpg" alt="Card image" style="width:100%">
+                                    <div class="card-body">
+                                    <h4 class="card-title">Clothes</h4>
+                                    <p class="card-text">Item description will be here</p>
+                                    <a href="#" class="btn btn-primary">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+
+
+
+                    
+
+                <!--</div>-->
 
             </div>
 
