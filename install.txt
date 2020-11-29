@@ -1,0 +1,3 @@
+npm install express --save
+npm install mongoose
+npm i method-override 

@@ -1,10 +1,9 @@
 <div class="row">
 	<h1>Edit auction</h1>
 	<div class="col-6 offer-3">
-		<form action="/auctions/{{id}}>?_method=PUT" method="POST">
+		<form action="/auctions/{{id}}?_method=PUT" method="POST" novalidate class="validated-form">
 
 			<!-- product name -->
-			<h1> {{id}}</h1>
 			<div class="mb-4">
 				<label class="form-label" for="title">Auction title:</label>
 				<input class="form-control" type="text" id="title" name="auction[name]" value="{{name}}">
@@ -40,6 +39,7 @@
 		</form>
 	</div>
 </div>
+
 <div class="mb-3">
-	<a class="btn btn-primary" href="/auctions/{{id}}"> Back to auction</a>
+	<a class="btn btn-primary" href="/auctions/{{id}}"> Cancel</a>
 </div>

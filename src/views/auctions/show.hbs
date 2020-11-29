@@ -7,6 +7,7 @@
 					<img class="image" src="{{image}}" width="400px" height="300px">
 					<form action="/auctions/{{id}}?_method=DELETE" method="POST">
 						<button class="btn btn-danger mt-3"> Delete Auction</button>
+						<a class="card-link btn btn-info mt-3" href="/auctions/{{id}}/edit"> Edit</a>
 					</form>
 				</div>
 			</div>
@@ -45,8 +46,4 @@
 		</div>
 	</div>
 </div>
-</div>
-
-<div class="card-body">
-	<!-- <a class = "card-link btn btn-info" href="/auctions/{{id}}/edit"> Edit</a> -->
 </div>
