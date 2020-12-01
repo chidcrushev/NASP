@@ -71,6 +71,47 @@ routes.post("/auctions", async (req, res) => {
     res.redirect(`/auctions/${auction._id}`)
 });
 
+// categories 
+
+// route to specific books
+routes.get('/auctions/car', isLoggedIn, async (request, response) => {
+    const auctions = await Auction.find({ category: "car" }).lean();
+    response.render('auctions/index', { auctions, username: request.user.username });
+});
+
+// route to electronics
+routes.get('/auctions/electronic', isLoggedIn, async (request, response) => {
+    const auctions = await Auction.find({ category: "electronic" }).lean();
+    response.render('auctions/index', { auctions, username: request.user.username });
+});
+
+// route to specific books
+routes.get('/auctions/fashion', isLoggedIn, async (request, response) => {
+    const auctions = await Auction.find({ category: "fashion" }).lean();
+    response.render('auctions/index', { auctions, username: request.user.username });
+});
+
+// route to electronics
+routes.get('/auctions/hobbies', isLoggedIn, async (request, response) => {
+    const auctions = await Auction.find({ category: "hobbies" }).lean();
+    response.render('auctions/index', { auctions, username: request.user.username });
+});
+
+// route to specific books
+routes.get('/auctions/home', isLoggedIn, async (request, response) => {
+    const auctions = await Auction.find({ category: "home" }).lean();
+    response.render('auctions/index', { auctions, username: request.user.username });
+});
+
+// route to electronics
+routes.get('/auctions/kitchen', isLoggedIn, async (request, response) => {
+    const auctions = await Auction.find({ category: "kitchen" }).lean();
+    response.render('auctions/index', { auctions, username: request.user.username });
+});
+
+// done categories
+
+
 // edit auction in database and redirect to the same auction
 routes.put("/auctions/:id", isLoggedIn, async (req, res) => {
     const { id } = req.params;
@@ -120,14 +161,8 @@ routes.get('/auctions/:id', isLoggedIn, async (request, response) => {
             path: "owner"
         }
     }).populate("owner");
-    console.log("type of user id ", request.user._id);
-    console.log(typeof request.user._id);
-    console.log("type of auction id ", auction.owner._id);
-    console.log(typeof auction.owner._id)
-    console.log(auction.owner.email);
     var user_id = JSON.stringify(request.user._id);
     var owner_id = JSON.stringify(auction.owner._id);
-    if (owner_id == user_id) console.log("equal");
     response.render('auctions/show', { auction: auction, ownerid: owner_id, username: request.user.username, id: user_id });
 });
 
@@ -138,6 +173,10 @@ routes.get('/auctions/:id/edit', isLoggedIn, async (request, response) => {
     response.render('auctions/edit', { id: auction._id, name: auction.name, price: auction.price, image: auction.image, description: auction.description });
 });
 
+
+
+
+
 //Route to the logout page
 routes.get("/logout", (req, res) => {
     req.logout();
@@ -146,12 +185,6 @@ routes.get("/logout", (req, res) => {
 
 
 var handel = hbs.create({});
-
-handel.handlebars.registerHelper("increasePrice", function (price) {
-    price += 10;
-    return price;
-});
-
 
 handel.handlebars.registerHelper({
     eq: (v1, v2) => v1 == v2,

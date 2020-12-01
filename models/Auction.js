@@ -6,6 +6,7 @@ const AuctionSchema = new Schema({
 	image: String,
 	price: Number,
 	description: String,
+	category: String,
 	reviews: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Review'
