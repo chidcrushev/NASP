@@ -3,12 +3,18 @@
 		<div class="col-6">
 			<div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
 				<div class="my-3 py-3">
-					<h2 class="display-5">{{name}}</h2>
-					<img class="image" src="{{image}}" width="400px" height="300px">
-					<form action="/auctions/{{id}}?_method=DELETE" method="POST">
+					<h2 class="display-5">{{auction.title}}</h2>
+					<img class="image" src="{{auction.image}}" width="400px" height="300px">
+
+
+					{{#if ( eq id ownerid)}}
+					<form action="/auctions/{{auction._id}}?_method=DELETE" method="POST">
 						<button class="btn btn-danger mt-3"> Delete Auction</button>
-						<a class="card-link btn btn-info mt-3" href="/auctions/{{id}}/edit"> Edit</a>
+						<a class="card-link btn btn-info mt-3" href="/auctions/{{auction._id}}/edit"> Edit</a>
 					</form>
+					{{/if}}
+
+
 				</div>
 			</div>
 		</div>
@@ -16,20 +22,17 @@
 			<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center">
 				<div class="my-3 py-3">
 					<h2 class="display-5">Current Bid</h2>
-					<h3 class="display-5">$ {{price}}</h3>
+					<h3 class="display-5">$ {{auction.price}}</h3>
 					<h4>
 						<div>
 							<!-- <img src="person.png" width="50px" height="50px"> -->
-
-							<h4> Auctioneer</h4>
-							<p> Sam Smith</p>
-							<p> Rating : 4.8 </p>
+							<p> Auctioneer : {{auction.owner.username}}</p>
 						</div>
 						<div style="clear: right;" />
 					</h4>
 					<form>
 						<label for="fname">My Bid:</label><br>
-						<input class="input" "type=" text" id="fname" name="fname"><br>
+						<input class="input" type="text" id="fname" name="fname"><br>
 						<input class="input" type="submit" value="Bid!">
 					</form>
 				</div>
@@ -42,8 +45,55 @@
 	<div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
 		<div class="my-3 py-3">
 			<h2 class="display-5">Description</h2>
-			<p class="lead">{{description}}</p>
+			<p class="lead">{{auction.description}}</p>
 		</div>
 	</div>
 </div>
+
+<!-- <h1>the delete cant get the auction._id</h1> -->
+<h2>Reviews</h2>
+{{#each auction.reviews }}
+<div class="card mb-4">
+	<div class="card-header">
+		Name {{review.author.username}}
+	</div>
+	<div class="card-body">
+		<blockquote class="blockquote mb-0">
+			<p>Review: {{body}}</p>
+			<p>Rating: {{rating}}</p>
+		</blockquote>
+	</div>
+	<!-- Delete review button -->
+	<!-- <form class="ml-5" action="/auctions/{{auction._id}}/{{review._id}}?_method=DELETE" method="POST">
+		<button class="btn btn-danger mt-3"> Delete </button>
+	</form> -->
 </div>
+{{/each}}
+</div>
+<!-- End Reviews for auctionner -->
+
+<!-- leave a review for auctionner -->
+<h2 class="mt-5">Leave a review</h2>
+<!-- instead fo {{auction._id}} put {{currentUser._id}} -->
+<form action="/auctions/{{auction._id}}/reviews" method="POST" class="mb-4 needs-validation" novalidate>
+	<div class="mb-4">
+		<label for="Range" class="form-label">Rating</label>
+		<input type="range" class="form-range" min="0" max="5" name="review[rating]" id="Range">
+	</div>
+
+	<div class="mb-4">
+		<label class="form-label" for="review">Review</label>
+		<textarea class="form-control" name="review[body]" id="review" cols="15" rows="3" required></textarea>
+		<div class="valid-feedback">
+			Looks good!
+		</div>
+	</div>
+
+	<button class="btn btn-success">Submit</button>
+</form>
+<!-- get autionner reviews
+loop over them  
+{{#each auction.owner.reviews}}
+<p>Review: {{body}}</p>
+<p>Rating: {{rating}}</p>
+{{/each}}-->

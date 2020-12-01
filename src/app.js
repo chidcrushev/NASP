@@ -36,6 +36,15 @@ app.use(express.static(path.join(__dirname, 'src'), { extensions: ['html', 'htm'
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
+
+const sessionConfig = {
+    secret: 'thisshouldbeabettersecret!',
+    resave: false,
+    saveUninitialized: true,
+}
+
+app.use(session(sessionConfig))
+
 // passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -45,10 +54,9 @@ passport.deserializeUser(User.deserializeUser());
 // end passport 
 
 app.use((req, res, next) => {
-    // console.log(req.session)
+    //console.log(req.session);
     res.locals.currentUser = req.user;
-    //res.locals.success = req.flash('success');
-    //res.locals.error = req.flash('error');
+    console.log(typeof res.locals.currentUser);
     next();
 })
 

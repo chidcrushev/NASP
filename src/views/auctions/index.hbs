@@ -1,7 +1,7 @@
 <section class="py-3 text-center container">
 	<div class="row py-lg-5">
 		<div class="col-lg-6 col-md-8 mx-auto">
-			<h1 class="fw-light">Welcome {{currentUser.username}}</h1>
+			<h1 class="fw-light">Welcome {{username}}</h1>
 			<p class="lead text-muted">We care for your stuff</p>
 			<p>
 				<a href="/auctions/new" class="btn btn-primary my-2">Create an Auction</a>
@@ -19,10 +19,10 @@
 						aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"
 						alt="" src="{{image}}">
 					<div class="card-body">
-						<p class="card-title">{{name}} </p>
+						<p class="card-title">{{title}} </p>
 						<div class="d-flex justify-content-between align-items-center">
 							<div>
-								<a class="btn btn-primary" href="/auctions/{{auction._id}}">View</a>
+								<a class="btn btn-primary" href="/auctions/{{_id}}">View</a>
 							</div>
 						</div>
 					</div>

@@ -4,9 +4,11 @@ const User = require("../models/user");
 const catchAsync = require("../utils/catchAsync");
 const { isLoggedIn } = require('../src/middleware');
 const Auction = require("../models/auction");
+const Review = require("../models/review");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const hbs = require('express-handlebars');
 
 //Routing to all the pages.
 //Route to the landing page
@@ -15,11 +17,9 @@ routes.get('/', (request, response) => {
     response.redirect("/register");
 })
 
-
 // start register 
 routes.get("/register", (req, res) => {
     res.render("users/register");
-
 });
 
 routes.post('/register', catchAsync(async (req, res, next) => {
@@ -29,11 +29,9 @@ routes.post('/register', catchAsync(async (req, res, next) => {
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if (err) return next(err);
-            // req.flash('success', 'Welcome!');
             res.redirect('/auctions');
         })
     } catch (e) {
-        //req.flash('error', e.message);
         res.redirect('register');
     }
 }));
@@ -44,91 +42,131 @@ routes.post('/register', catchAsync(async (req, res, next) => {
 routes.get('/login', (request, response) => {
     response.render('users/login')
 
-})
+});
 
-
-routes.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
-    //req.flash('success', 'welcome back!');    
+// login form 
+routes.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
     res.redirect("/auctions");
 });
 
-//Route to the logout page
-routes.get("/logout", (req, res) => {
-    req.logout();
-    //req.flash("success","Goodbye!");
-    res.redirect("/register");
-});
 
 //Route to the dashboard page
-routes.get('/auctions', async (request, response) => {
+routes.get('/auctions', isLoggedIn, async (request, response) => {
     //If using mongoose, this issue can be solved by using
     //.lean() to get a json object (instead of a mongoose one):
     const auctions = await Auction.find({}).lean();
-    response.render('auctions/index', { auctions });
+    response.render('auctions/index', { auctions, username: request.user.username });
 })
 
 //Route to the create an auction
-routes.get('/auctions/new', async (request, response) => {
+routes.get('/auctions/new', isLoggedIn, async (request, response) => {
     response.render('auctions/new');
 })
 
 // create new auction form 
 routes.post("/auctions", async (req, res) => {
     const auction = new Auction(req.body.auction);
+    auction.owner = req.user._id;
     await auction.save();
     res.redirect(`/auctions/${auction._id}`)
 });
 
-// not working 
 // edit auction in database and redirect to the same auction
-routes.put("/auctions/:id", async (req, res) => {
+routes.put("/auctions/:id", isLoggedIn, async (req, res) => {
     const { id } = req.params;
-    console.log((id));
-    console.log("one");
+    const auct = await Auction.findById(id);
+    var user_id = JSON.stringify(req.user._id);
+    var owner_id = JSON.stringify(auct.owner._id);
+    console.log("equal", (owner_id == user_id))
+    if (!(owner_id == user_id)) {
+        return res.redirect(`/auctions/${id}`);
+    }
     const auction = await Auction.findByIdAndUpdate(id, { ...req.body.auction });
-    console.log(auction);
     res.redirect(`/auctions/${auction._id}`)
 });
 
-// delete
-routes.delete("/auctions/:id", async (req, res) => {
+// delete auction
+routes.delete("/auctions/:id", isLoggedIn, async (req, res) => {
     const { id } = req.params;
     await Auction.findByIdAndDelete(id);
     res.redirect("/auctions");
 })
 
+// delete auction
+routes.delete("/auctions/:id/:reviewId", isLoggedIn, async (req, res) => {
+    const { id, reviewId } = req.params;
+    await Auction.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/auctions/${id}`);
+});
+
+// create a review 
+routes.post("/auctions/:id/reviews", isLoggedIn, catchAsync(async (req, res) => {
+    const auction = await Auction.findById(req.params.id);
+    const review = new Review(req.body.review);
+    review.owner = req.user._id;
+    auction.reviews.push(review);
+    await review.save();
+    await auction.save();
+    res.redirect(`/auctions/${auction._id}`);
+}));
+
+
+
 // route to specific auction page
-routes.get('/auctions/:id', async (request, response) => {
-    const auction = await Auction.findById(request.params.id).lean();
-    response.render('auctions/show', { id: auction._id, name: auction.name, price: auction.price, image: auction.image, description: auction.description });
-})
+routes.get('/auctions/:id', isLoggedIn, async (request, response) => {
+    const auction = await Auction.findById(request.params.id).lean().populate({
+        path: "reviews", populate: {
+            path: "owner"
+        }
+    }).populate("owner");
+    console.log("type of user id ", request.user._id);
+    console.log(typeof request.user._id);
+    console.log("type of auction id ", auction.owner._id);
+    console.log(typeof auction.owner._id)
+    console.log(auction.owner.email);
+    var user_id = JSON.stringify(request.user._id);
+    var owner_id = JSON.stringify(auction.owner._id);
+    if (owner_id == user_id) console.log("equal");
+    response.render('auctions/show', { auction: auction, ownerid: owner_id, username: request.user.username, id: user_id });
+});
 
 // route to edit specific auction page
-routes.get('/auctions/:id/edit', async (request, response) => {
+routes.get('/auctions/:id/edit', isLoggedIn, async (request, response) => {
     //const auction = await Auction.findById(request.params.id).lean();
     const auction = await Auction.findById(request.params.id);
     response.render('auctions/edit', { id: auction._id, name: auction.name, price: auction.price, image: auction.image, description: auction.description });
-})
+});
+
+//Route to the logout page
+routes.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect("/login");
+});
 
 
+var handel = hbs.create({});
 
-//Route to the dashboard page
-routes.get('/dashboard', (request, response) => {
-    response.send("Hello, from the dashboard page");
-})
-
-
-//Route to the sell product page
-routes.get('/sell-product', (request, response) => {
-    response.send("Hello, from the sell product page");
-})
+handel.handlebars.registerHelper("increasePrice", function (price) {
+    price += 10;
+    return price;
+});
 
 
-//Route for the logout page- This redirects to the signin page
-routes.get('/logout', (request, response) => {
-    response.redirect('/signin');
-})
-
+handel.handlebars.registerHelper({
+    eq: (v1, v2) => v1 == v2,
+    ne: (v1, v2) => v1 !== v2,
+    lt: (v1, v2) => v1 < v2,
+    gt: (v1, v2) => v1 > v2,
+    lte: (v1, v2) => v1 <= v2,
+    gte: (v1, v2) => v1 >= v2,
+    and() {
+        return Array.prototype.every.call(arguments, Boolean);
+    },
+    or() {
+        return Array.prototype.slice.call(arguments, 0, -1).some(Boolean);
+    }
+});
 
 //exporting the router module.
 module.exports = routes;

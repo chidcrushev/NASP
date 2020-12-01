@@ -1,5 +1,11 @@
+{{#if currentUser}}
 <footer class="footer bg-dark py-3 mt-auto">
     <p class="float-right  mr-4"><a href="#">Back to top</a></p>
     <p class="text-light bg-dark ml-4">&copy; 2020-2021 NMSU ROCKERS <a href="#">Privacy</a> &middot; <a
             href="#">Terms</a></p>
 </footer>
+{{else}}
+<footer class="mt-autotext-black-50 text-center mt-auto">
+    <p>&copy 2020</p>
+</footer>
+{{/if}}
