@@ -1,5 +1,5 @@
 <section class="py-3 text-center container">
-	<div class="row py-lg-5">
+	<div class="row py-lg-5" style="background-image: url('landingpage.jpg');">
 		<div class="col-lg-6 col-md-8 mx-auto">
 			<h1 class="fw-light">Welcome {{username}}</h1>
 			<p class="lead text-muted">We care for your stuff</p>
@@ -10,16 +10,27 @@
 	</div>
 </section>
 
-<div>
-	<a class="btn btn-primary" href="/auctions">All</a>
-	<a class="btn btn-primary" href="/auctions/car">Cars</a>
-	<a class="btn btn-primary" href="/auctions/electronic">Electronics and Computer</a>
-
-	<a class="btn btn-primary" href="/auctions/fashion">Fashion, Health and Beauty</a>
-	<a class="btn btn-primary" href="/auctions/hobbies">Hobbies, Toys, Outdoors</a>
-	<a class="btn btn-primary" href="/auctions/home">Home, Garden and Tools</a>
-
-	<a class="btn btn-primary" href="/auctions/kitchen">Kitchen and Dining</a>
+<div style="background-image: url('landingpage.jpg');" class="container-fluid" role="group"
+	aria-label="Button group with nested dropdown">
+	<div class="btn-group mb-3 mt-3">
+		<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+			aria-expanded="false">
+			Categories
+		</button>
+		<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+			<li><a class="dropdown-item" href="/auctions">All</a></li>
+			<li><a class="dropdown-item" href="/auctions/car">Cars</a></li>
+			<li><a class="dropdown-item" href="/auctions/electronic">Electronics and Computer</a></li>
+			<li><a class="dropdown-item" href="/auctions/fashion">Fashion, Health and Beauty</a></li>
+			<li><a class="dropdown-item" href="/auctions/hobbies">Hobbies, Toys, Outdoors</a></li>
+			<li><a class="dropdown-item" href="/auctions/home">Home, Garden and Tools</a></li>
+			<li><a class="dropdown-item" href="/auctions/kitchen">Kitchen and Dining</a></li>
+		</ul>
+	</div>
+	<form class="d-flex">
+		<input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
+		<button class="btn btn-outline-success" type="submit">Search</button>
+	</form>
 </div>
 
 <div class="container">
