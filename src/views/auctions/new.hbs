@@ -32,10 +32,23 @@
 				<input class="form-control" type="text" id="image" name="auction[image]" required>
 			</div>
 
+
+
+			<!-- time set -->
+			<label class="form-label" for="setTime">Set Time: </label>
+			<select class="form-select form-select-lg mb-3" name="auction[setTime]">
+				<option value="1" selected>1 day</option>
+				<option value="2">2 days</option>
+				<option value="3">3 days</option>
+				<option value="4">4 days</option>
+				<option value="5">5 days</option>
+				<option value="6">6 days</option>
+			</select>
+
 			<!-- category -->
+			<label class="form-label" for="category">Category: </label>
 			<select class="form-select form-select-lg mb-3" name="auction[category]"
 				aria-label=".form-select-sm example">
-				<option selected>Category</option>
 				<option value="car">Cars</option>
 				<option value="electronic">Electronics and computer</option>
 				<option value="fashion">Fashion, health and beauty</option>

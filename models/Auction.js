@@ -7,6 +7,9 @@ const AuctionSchema = new Schema({
 	price: Number,
 	description: String,
 	category: String,
+	setTime: String,
+	highestBid: Number,
+	highestBidderName: String,
 	reviews: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Review'

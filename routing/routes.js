@@ -3,7 +3,7 @@ const routes = express.Router();
 const User = require("../models/user");
 const catchAsync = require("../utils/catchAsync");
 const { isLoggedIn } = require('../src/middleware');
-const Auction = require("../models/auction");
+const Auction = require("../models/Auction");
 const Review = require("../models/review");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
@@ -45,7 +45,7 @@ routes.get('/login', (request, response) => {
 });
 
 // login form 
-routes.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
+routes.post('/login', passport.authenticate('local', {  failureRedirect: '/login' }), (req, res) => {
     res.redirect("/auctions");
 });
 
@@ -67,7 +67,22 @@ routes.get('/auctions/new', isLoggedIn, async (request, response) => {
 routes.post("/auctions", async (req, res) => {
     const auction = new Auction(req.body.auction);
     auction.owner = req.user._id;
+
+    //Store empty values initially.
+    auction.highestBid = Number("0");
+    auction.highestBidderName = "None"
+
+    //Checks the days value.
+    let now = new Date();
+    now.setDate(now.getDate() + Number(auction.setTime)); 
+
+
+    //Store the time
+    auction.setTime = now;
     await auction.save();
+
+    //Check whether the logged in user is the auctioneer- If so, the auctioneer can't participate in the auction.
+
     res.redirect(`/auctions/${auction._id}`)
 });
 
@@ -123,6 +138,25 @@ routes.put("/auctions/:id", isLoggedIn, async (req, res) => {
         return res.redirect(`/auctions/${id}`);
     }
     const auction = await Auction.findByIdAndUpdate(id, { ...req.body.auction });
+    console.log("Invoked")
+    console.log(auction)
+    res.redirect(`/auctions/${auction._id}`)
+});
+
+//Submit the bid price and redirect to the same auction
+routes.put("/auctions/:id/updateBid", isLoggedIn, async (req, res) => {
+    console.log("Involed");
+    const { id } = req.params;
+    const auct = await Auction.findById(id);
+    var user_id = JSON.stringify(req.user._id);
+    var owner_id = JSON.stringify(auct.owner._id);
+    console.log("equal", (owner_id == user_id))
+    if (!(owner_id == user_id)) {
+        return res.redirect(`/auctions/${id}`);
+    }
+    const auction = await Auction.findByIdAndUpdate(id, { ...req.body.auction });
+    console.log("Invoked")
+    console.log(auction)
     res.redirect(`/auctions/${auction._id}`)
 });
 
