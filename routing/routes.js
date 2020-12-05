@@ -45,7 +45,7 @@ routes.get('/login', (request, response) => {
 });
 
 // login form 
-routes.post('/login', passport.authenticate('local', {  failureRedirect: '/login' }), (req, res) => {
+routes.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
     res.redirect("/auctions");
 });
 
@@ -74,7 +74,7 @@ routes.post("/auctions", async (req, res) => {
 
     //Checks the days value.
     let now = new Date();
-    now.setDate(now.getDate() + Number(auction.setTime)); 
+    now.setDate(now.getDate() + Number(auction.setTime));
 
 
     //Store the time
@@ -143,6 +143,7 @@ routes.put("/auctions/:id", isLoggedIn, async (req, res) => {
     res.redirect(`/auctions/${auction._id}`)
 });
 
+
 //Submit the bid price and redirect to the same auction
 routes.put("/auctions/:id/updateBid", isLoggedIn, async (req, res) => {
     console.log("Involed");
@@ -150,15 +151,16 @@ routes.put("/auctions/:id/updateBid", isLoggedIn, async (req, res) => {
     const auct = await Auction.findById(id);
     var user_id = JSON.stringify(req.user._id);
     var owner_id = JSON.stringify(auct.owner._id);
-    console.log("equal", (owner_id == user_id))
-    if (!(owner_id == user_id)) {
+    if ((owner_id == user_id)) {
         return res.redirect(`/auctions/${id}`);
     }
     const auction = await Auction.findByIdAndUpdate(id, { ...req.body.auction });
     console.log("Invoked")
-    console.log(auction)
+    console.log(auct)
     res.redirect(`/auctions/${auction._id}`)
 });
+
+
 
 // delete auction
 routes.delete("/auctions/:id", isLoggedIn, async (req, res) => {
