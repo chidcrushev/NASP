@@ -146,17 +146,8 @@ routes.put("/auctions/:id", isLoggedIn, async (req, res) => {
 
 //Submit the bid price and redirect to the same auction
 routes.put("/auctions/:id/updateBid", isLoggedIn, async (req, res) => {
-    console.log("Involed");
     const { id } = req.params;
-    const auct = await Auction.findById(id);
-    var user_id = JSON.stringify(req.user._id);
-    var owner_id = JSON.stringify(auct.owner._id);
-    if ((owner_id == user_id)) {
-        return res.redirect(`/auctions/${id}`);
-    }
     const auction = await Auction.findByIdAndUpdate(id, { ...req.body.auction });
-    console.log("Invoked")
-    console.log(auct)
     res.redirect(`/auctions/${auction._id}`)
 });
 
