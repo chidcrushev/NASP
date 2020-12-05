@@ -151,6 +151,7 @@ routes.put("/auctions/:id/updateBid", isLoggedIn, async (req, res) => {
 
 // search bar  // depends on title only 
 routes.get("/search", isLoggedIn, async (req, res) => {
+    const searchField = req.query.search;
     Auction.find({ title: { $regex: searchField, $options: '$i' } }).lean()
         .then(data => {
             auctions = data;
