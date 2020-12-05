@@ -10,17 +10,33 @@
 	</div>
 </section>
 
-<div>
-	<a class="btn btn-primary" href="/auctions">All</a>
-	<a class="btn btn-primary" href="/auctions/car">Cars</a>
-	<a class="btn btn-primary" href="/auctions/electronic">Electronics and Computer</a>
+<div class="container">
+	<div class="row mb-3 mt-3">
+		<div class="col">
+			<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+				aria-expanded="false">
+				Categories
+			</button>
+			<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+				<li><a class="dropdown-item" href="/auctions">All</a></li>
+				<li><a class="dropdown-item" href="/auctions/car">Cars</a></li>
+				<li><a class="dropdown-item" href="/auctions/electronic">Electronics and Computer</a></li>
+				<li><a class="dropdown-item" href="/auctions/fashion">Fashion, Health and Beauty</a></li>
+				<li><a class="dropdown-item" href="/auctions/hobbies">Hobbies, Toys, Outdoors</a></li>
+				<li><a class="dropdown-item" href="/auctions/home">Home, Garden and Tools</a></li>
+				<li><a class="dropdown-item" href="/auctions/kitchen">Kitchen and Dining</a></li>
+			</ul>
+		</div>
 
-	<a class="btn btn-primary" href="/auctions/fashion">Fashion, Health and Beauty</a>
-	<a class="btn btn-primary" href="/auctions/hobbies">Hobbies, Toys, Outdoors</a>
-	<a class="btn btn-primary" href="/auctions/home">Home, Garden and Tools</a>
-
-	<a class="btn btn-primary" href="/auctions/kitchen">Kitchen and Dining</a>
+		<div class="col">
+			<form class="d-flex">
+				<input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
+				<button class="btn btn-outline-success" type="submit">Search</button>
+			</form>
+		</div>
+	</div>
 </div>
+
 
 <div class="container">
 	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
