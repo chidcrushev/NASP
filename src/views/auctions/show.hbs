@@ -18,41 +18,21 @@
 			<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center">
 				<div class="my-3 py-3">
 					<div>
-						<h5 class="display-8">Starting Price $ {{auction.price}}</h5>
-						<p></p>
-					</div>
-					<div>
 						<!-- <img src="person.png" width="50px" height="50px"> -->
 						<p> Auctioneer : {{auction.owner.username}}</p>
 					</div>
 					<div>
-						<h5 class="display-8">Current Highest Bid $ <span class="highestBid"
-								id="highestBid">{{auction.highestBid}}</span></h5>
-						<p></p>
+						<h5 class="display-8">Highest asking price: $ {{auction.price}}</h5>
 					</div>
+					{{!-- <div>
+						<h5 class="display-8">Highest Bid $ <span class="highestBid"
+								id="highestBid">{{auction.highestBid}}</span></h5>
+					</div> --}}
 					<div>
 						<!-- <img src="person.png" width="50px" height="50px"> -->
 						<p> Highest Bidder : <span class="highestBidderName" id="highestBidderName">{{username}}</span>
 						</p>
 					</div>
-
-					<div style="clear: right;" />
-
-					{{#if ( ne id ownerid)}}
-					{{!-- <form action="/auctions/{{id}}?_method=PUT" method="POST" novalidate class="validated-form">
-						<label for="fname">My Bid:</label><br>
-						<input class="input" type="number" id="fname" name="auction[highestBid]"></br>
-						<button type="button" id ="bidSubmitBtn" class="btn btn-success">Submit</button>
-					</form> --}}
-					<form action="/auctions/{{auction._id}}/updateBid?_method=PUT" method="POST" novalidate
-						class="validated-form">
-						<div class="mb-4">
-							<label class="form-label" for="myBid">My Bid:</label>
-							<input class="form-control" type="text" id="myBid" name="auction[highestBid]">
-						</div>
-						<button class="btn btn-success">Submit</button>
-					</form>
-					{{/if}}
 
 					<span class="setTime" id="setTime" style="visibility:hidden">{{auction.setTime}}</span>
 
@@ -67,6 +47,38 @@
 
 						</div>
 					</i>
+
+					<div style="clear: right;" />
+
+					{{!-- <form action="/auctions/{{id}}?_method=PUT" method="POST" novalidate class="validated-form">
+						<label for="fname">My Bid:</label><br>
+						<input class="input" type="number" id="fname" name="auction[highestBid]"></br>
+						<button type="button" id ="bidSubmitBtn" class="btn btn-success">Submit</button>
+					</form> --}}
+					<form action="/auctions/{{auction._id}}/updateBid?_method=PUT" method="POST" novalidate
+						class="validated-form">
+						{{#if ( ne id ownerid)}}
+						<div class="mb-4">
+							<label class="form-label" for="myBid">My Bid:</label>
+							<input class="form-control" type="text" id="myBid" name="auction[highestBid]">
+						</div>
+						<button class="btn btn-success">Bid!</button>
+						{{/if}}
+
+						{{#if ( eq id ownerid)}}
+						<div class="mb-4">
+							<label class="form-label" for="myBid">Lower price:</label>
+							<input class="form-control" type="text" id="myBid" name="auction[price]">
+						</div>
+						<button class="btn btn-success">Change price</button>
+						{{/if}}
+
+
+					</form>
+					{{#if ( eq id ownerid)}}
+					<a class="card-link btn btn-info mt-3" href="/auctions/{{auction._id}}/sell"> Sell</a>
+					<a class="card-link btn btn-danger mt-3" href="/auctions/{{auction._id}}/end"> End</a>
+					{{/if}}
 				</div>
 			</div>
 		</div>

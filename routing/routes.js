@@ -109,6 +109,7 @@ routes.get('/auctions/fashion', isLoggedIn, async (request, response) => {
 // route to electronics
 routes.get('/auctions/hobbies', isLoggedIn, async (request, response) => {
     const auctions = await Auction.find({ category: "hobbies" }).lean();
+
     response.render('auctions/index', { auctions, username: request.user.username });
 });
 
@@ -133,13 +134,10 @@ routes.put("/auctions/:id", isLoggedIn, async (req, res) => {
     const auct = await Auction.findById(id);
     var user_id = JSON.stringify(req.user._id);
     var owner_id = JSON.stringify(auct.owner._id);
-    console.log("equal", (owner_id == user_id))
     if (!(owner_id == user_id)) {
         return res.redirect(`/auctions/${id}`);
     }
     const auction = await Auction.findByIdAndUpdate(id, { ...req.body.auction });
-    console.log("Invoked")
-    console.log(auction)
     res.redirect(`/auctions/${auction._id}`)
 });
 
@@ -151,7 +149,14 @@ routes.put("/auctions/:id/updateBid", isLoggedIn, async (req, res) => {
     res.redirect(`/auctions/${auction._id}`)
 });
 
-
+// search bar  // depends on title only 
+routes.get("/search", isLoggedIn, async (req, res) => {
+    Auction.find({ title: { $regex: searchField, $options: '$i' } }).lean()
+        .then(data => {
+            auctions = data;
+            res.render('auctions/index', { auctions, username: req.user.username });
+        })
+});
 
 // delete auction
 routes.delete("/auctions/:id", isLoggedIn, async (req, res) => {
@@ -198,6 +203,30 @@ routes.get('/auctions/:id/edit', isLoggedIn, async (request, response) => {
     //const auction = await Auction.findById(request.params.id).lean();
     const auction = await Auction.findById(request.params.id);
     response.render('auctions/edit', { id: auction._id, name: auction.name, price: auction.price, image: auction.image, description: auction.description });
+});
+
+// sell auction
+routes.get('/auctions/:id/sell', isLoggedIn, async (request, response) => {
+    const auction = await Auction.findById(request.params.id).lean().populate({
+        path: "reviews", populate: {
+            path: "owner"
+        }
+    }).populate("owner");
+    var user_id = JSON.stringify(request.user._id);
+    var owner_id = JSON.stringify(auction.owner._id);
+    response.render('auctions/show', { auction: auction, ownerid: owner_id, username: request.user.username, id: user_id });
+});
+
+// end auction
+routes.get('/auctions/:id/end', isLoggedIn, async (request, response) => {
+    const auction = await Auction.findById(request.params.id).lean().populate({
+        path: "reviews", populate: {
+            path: "owner"
+        }
+    }).populate("owner");
+    var user_id = JSON.stringify(request.user._id);
+    var owner_id = JSON.stringify(auction.owner._id);
+    response.render('auctions/show', { auction: auction, ownerid: owner_id, username: request.user.username, id: user_id });
 });
 
 

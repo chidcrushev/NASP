@@ -4,13 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{#if currentUser}}
+    <!-- <meta http-equiv="refresh" content="10" /> -->
+    {{/if}}
     <title>NASP</title>
     <!-- Bootstrap 5.0.0 alpha-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 
-  <!-- reference Moment.js library -->
-  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+    <!-- reference Moment.js library -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -53,7 +56,12 @@
                     }, false)
                 })
         })()
+
+
+
+
     </script>
+
 </body>
 
 </html>
