@@ -18,25 +18,28 @@
 			<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center">
 				<div class="my-3 py-3">
 					<div>
+						<p class="statusAuction" id="statusAuction" style="visibility:hidden">{{auction.status}}</p>
 						<!-- <img src="person.png" width="50px" height="50px"> -->
 						<p> Auctioneer : {{auction.owner.username}}</p>
 					</div>
 					<div>
-						<h5 class="display-8">Highest asking price: $ {{auction.price}}</h5>
+						<h5 class="display-8">Base price: $ {{auction.price}}</h5>
 					</div>
 					{{!-- <div>
 						<h5 class="display-8">Highest Bid $ <span class="highestBid"
 								id="highestBid">{{auction.highestBid}}</span></h5>
 					</div> --}}
-					<div>
+					<div id="highestBidder">
 						<!-- <img src="person.png" width="50px" height="50px"> -->
-						<p> Highest Bidder : <span class="highestBidderName" id="highestBidderName">{{username}}</span>
+						<p> Highest Bidder : <span class="highestBidderName"
+								id="highestBidderName">{{auction.highestBidderName}}</span> $ <span
+								class="highestBidValue">{{auction.highestBid}}</span>
 						</p>
 					</div>
 
 					<span class="setTime" id="setTime" style="visibility:hidden">{{auction.setTime}}</span>
 
-					<i>
+					<i id="timeLeft">
 						<h6 class="display-12 ">Time left: </h6>
 						<div class="timeLeft">
 							<span id="days"></span>
@@ -56,14 +59,34 @@
 						<button type="button" id ="bidSubmitBtn" class="btn btn-success">Submit</button>
 					</form> --}}
 					<form action="/auctions/{{auction._id}}/updateBid?_method=PUT" method="POST" novalidate
-						class="validated-form">
+						class="needs-validation" id="myBidInput">
 						{{#if ( ne id ownerid)}}
 						<div class="mb-4">
 							<label class="form-label" for="myBid">My Bid:</label>
-							<input class="form-control" type="text" id="myBid" name="auction[highestBid]">
+
+							{{#if (eq auction.highestBid 0)}}
+							<input class="form-control" type="number" id="myBid" name="auction[highestBid]"
+								aria-describedby="validationServer03Feedback" min={{auction.price}}>
+
+							<div id="validationServer03Feedback" class="invalid-feedback">
+								Please provide bid value greater than {{auction.price}}
+							</div>
+							{{else}}
+							<input class="form-control" type="number" id="myBid" name="auction[highestBid]"
+								aria-describedby="validationServer03Feedback" min={{auction.highestBid}}>
+
+							<div id="validationServer03Feedback" class="invalid-feedback">
+								Please provide bid value greater than {{auction.highestBid}}
+							</div>
+							{{/if}}
+
+
+
+
 						</div>
 						<button class="btn btn-success">Bid!</button>
 						{{/if}}
+
 
 						{{#if ( eq id ownerid)}}
 						<div class="mb-4">
@@ -79,6 +102,13 @@
 					<a class="card-link btn btn-info mt-3" href="/auctions/{{auction._id}}/sell"> Sell</a>
 					<a class="card-link btn btn-danger mt-3" href="/auctions/{{auction._id}}/end"> End</a>
 					{{/if}}
+
+					<div id="announceWinner" style="visibility:hidden;display:hidden">
+						<!-- <img src="person.png" width="50px" height="50px"> -->
+						<h6> The auction is over!! The winner is {{auction.highestBidderName}} with Bid
+							${{auction.highestBid}}</h6>
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -147,12 +177,8 @@ loop over them
 <script type="text/javascript">
 
 
-	//To handle the events of the submit button
-	/*document.addEventListener('DOMContentLoaded', function(event) {
-    
-	let auctioneerName = document.getElementById()
 
-   })*/
+	//To handle the events of the submit button
 
 	//Logic for time
 	let timeLeft = document.getElementById("setTime");
@@ -161,36 +187,53 @@ loop over them
 
 	// The data/time we want to countdown to
 	let countDownDate = new Date(time);
-	countDownDate.setDate(countDownDate.getDate() + 1);
+	countDownDate.setDate(countDownDate.getDate());
+
+	let nw = new Date().getTime();
+	let tl = countDownDate.getTime() - nw;
+	if (tl < 0) {
+		document.getElementById("announceWinner").setAttribute("style", "display:block;visibility:visible")
+		document.getElementById("timeLeft").remove();
+		document.getElementById("myBidInput").remove();
+		document.getElementById("highestBidder").remove();
+	}
+
+	if (tl > 0) {
+		// Run myfunc every second
+		let myfunc = setInterval(function () {
+
+			let now = new Date().getTime();
+			let timeleft = countDownDate.getTime() - now;
 
 
-	// Run myfunc every second
-	let myfunc = setInterval(function () {
+			// Calculating the days, hours, minutes and seconds left
+			let days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+			let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+			let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
 
-		let now = new Date().getTime();
-		let timeleft = countDownDate.getTime() - now;
+			// Result is output to the specific element
+			document.getElementById("days").innerHTML = days + "d "
+			document.getElementById("hours").innerHTML = hours + "h "
+			document.getElementById("minutes").innerHTML = minutes + "m "
+			document.getElementById("seconds").innerHTML = seconds + "s "
 
-		// Calculating the days, hours, minutes and seconds left
-		let days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
-		let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
-		let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+			// Display the message when countdown is over
+			if (timeleft < 0) {
+				clearInterval(myfunc);
+				document.getElementById("days").innerHTML = ""
+				document.getElementById("hours").innerHTML = ""
+				document.getElementById("minutes").innerHTML = ""
+				document.getElementById("seconds").innerHTML = ""
+				document.getElementById("end").innerHTML = "Auction over!!";
+				document.getElementById("timeLeft").remove();
+				document.getElementById("myBidInput").remove();
+				document.getElementById("highestBidder").remove();
 
-		// Result is output to the specific element
-		document.getElementById("days").innerHTML = days + "d "
-		document.getElementById("hours").innerHTML = hours + "h "
-		document.getElementById("minutes").innerHTML = minutes + "m "
-		document.getElementById("seconds").innerHTML = seconds + "s "
 
-		// Display the message when countdown is over
-		if (timeleft < 0) {
-			clearInterval(myfunc);
-			document.getElementById("days").innerHTML = ""
-			document.getElementById("hours").innerHTML = ""
-			document.getElementById("minutes").innerHTML = ""
-			document.getElementById("seconds").innerHTML = ""
-			document.getElementById("end").innerHTML = "Auction over!!";
-		}
-	}, 1000);
+			}
+		}, 1000);
+
+	}
 
 </script>

@@ -32,6 +32,7 @@ db.once("open", () => {
 
 
 // Static folder
+console.log(__dirname)
 app.use(express.static(path.join(__dirname, 'src'), { extensions: ['html', 'htm'] }));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
@@ -59,6 +60,15 @@ app.use((req, res, next) => {
     next();
 })
 
+
+//Handling cache and cookies
+app.use('/*', (req, res, next) =>{
+    res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+    next();
+});
+
+
+
 //Setting up handlebars.
 app.engine('hbs', hbs({
     extname: 'hbs',
@@ -77,4 +87,6 @@ app.set('views', path.join(__dirname, 'views'));
 // Start the server on port 2000
 http.listen(port, () => {
     console.log(`Server is listening on port ${port}`)
-});  
+});
+
+

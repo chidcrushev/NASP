@@ -7,8 +7,9 @@ const Auction = require("../models/Auction");
 const Review = require("../models/review");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
-const passport = require("passport");
 const hbs = require('express-handlebars');
+const passport = require("../models/passport-auth");
+
 
 //Routing to all the pages.
 //Route to the landing page
@@ -19,35 +20,114 @@ routes.get('/', (request, response) => {
 
 // start register 
 routes.get("/register", (req, res) => {
-    res.render("users/register");
+    res.render("users/register1");
 });
 
 routes.post('/register', catchAsync(async (req, res, next) => {
     try {
-        const { email, username, password } = req.body;
-        const user = new User({ email, username });
+        const { email, username, password } = req.body;         
+        const user = new User({ email, username, password });
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if (err) return next(err);
             res.redirect('/auctions');
         })
     } catch (e) {
-        res.redirect('register');
+
+        //Throw the error messages - Username taken already, Email already exists, Invalid password.
+                 
+        //Retrieve the form details.
+         const email = req.body.email;
+        
+         
+         let query = {email:email};
+         
+
+         User.findOne(query, (err, user)=>{
+           
+             if(err){
+                 console.log("DataBase connection Error or Invalid Query")
+             }
+     
+                  
+             //If User found- send a flash message stating "Email-id already exists"
+             if(user){
+                 res.render('users/register1', {
+                     message: "Email already exists. Try another!",
+                     error: true
+                      
+                 })
+             }
+
+             if(user == null){
+                res.render('users/register1', {
+                    message: "Username taken already!",
+                    error: true
+                     
+                })
+            }
+         })
+
     }
 }));
 
-// end register
 
 //Route to the login page
 routes.get('/login', (request, response) => {
-    response.render('users/login')
+    response.render('users/login1')
 
 });
 
-// login form 
-routes.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
-    res.redirect("/auctions");
+// // login form 
+// routes.post('/login', passport.authenticate('local', { 
+//   failureRedirect: '/login',
+//   failureMsg: "Invalid Password/username",
+//   failure: true
+// }), 
+//     (req, res) => {
+//     res.redirect("/auctions");
+// });
+
+
+
+routes.post('/login',  (req,res, next)=>{
+
+    passport.authenticate('signin', (err, user, info) => {
+
+    if (err) { 
+        console.log(err);
+    }
+
+    if (!user) { 
+        return res.render('users/login1', {
+            failureMsg: info.errorSignInMsg,
+            failure: true
+        })
+    }
+
+    req.logIn(user, (err) => {
+        if (err) { 
+            console.log(err);
+        }
+
+        res.render('users/login1', {
+            successMsg: 'Logged in Successfully',
+            success: true
+        });
+
+        res.redirect('/auctions');
+    });
+    
+})(req, res, next);
+
+}, (err, req, res, next) => {
+// failure in login route
+// res.statusMessage = err.message;
+// return res.status(400).send();
+
+
 });
+
 
 
 //Route to the dashboard page
@@ -70,8 +150,8 @@ routes.post("/auctions", async (req, res) => {
 
     //Store empty values initially.
     auction.highestBid = Number("0");
-    auction.highestBidderName = "None"
-
+    auction.highestBidderName = "----"
+    auction.status = "open"
     //Checks the days value.
     let now = new Date();
     now.setDate(now.getDate() + Number(auction.setTime));
@@ -145,7 +225,8 @@ routes.put("/auctions/:id", isLoggedIn, async (req, res) => {
 //Submit the bid price and redirect to the same auction
 routes.put("/auctions/:id/updateBid", isLoggedIn, async (req, res) => {
     const { id } = req.params;
-    const auction = await Auction.findByIdAndUpdate(id, { ...req.body.auction });
+    const highestBid = req.body.auction;
+    const auction = await Auction.findByIdAndUpdate(id, { highestBidderName: req.user.username, highestBid: highestBid.highestBid });
     res.redirect(`/auctions/${auction._id}`)
 });
 

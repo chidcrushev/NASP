@@ -1,0 +1,227 @@
+<div class ="form-background">
+</div>
+<div class="form-container">
+	<div class="form">
+		<div class="loginForm">
+			<form class="col s12" method="POST" id="loginUserForm" action="/login">
+
+				<div class="row">
+					<div class="input-field col s12">
+						<span>
+							<h6>NASP</h6>
+							<div class="failure-form-error">{{#if failure}}
+								<div class ="error-message">{{failureMsg}}
+								 </div> {{/if}}
+							</div>
+
+							<div class="success-form-error">{{#if success}}
+								<div class ="error-message">{{successMsg}}
+								 </div> {{/if}}
+							</div>
+
+
+							</span>
+							</div>
+							</div>
+							
+							<div class="row">
+								<div class="input-field col s12 fields">
+									<i class="material-icons prefix">account_circle</i>
+							
+									<input id="username" type="text" name="username" class="validate" required>
+									<label for="username">Email</label>
+								</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12 fields">
+						<i class="material-icons prefix">password</i>
+
+						<input id="password" type="password" name="password" class="validate" required>
+						<label for="password">Password</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s12 fields">
+
+						<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+							<i class="material-icons right">send</i>
+						</button>
+					</div>
+				</div>
+
+				<div class="row row-register">
+					<div class="input-field col s12 fields ">
+						<a href="/register">Register?</a>
+					</div>
+				</div>
+
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+<!-- Script files-->
+   <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> 
+
+
+<style>
+
+
+.form-container{
+  display: table;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.form-container .form{
+  display: table-cell;
+  vertical-align: middle;
+  width: 400px;
+}
+
+.loginForm{
+border: 1px solid #f2f2f2;
+height: 470px;
+position: relative;
+background-color: white;
+border: 1px solid #e4dada;
+}
+
+.registerForm{
+  border: 1px solid #f2f2f2;
+  height: 550px;
+  width: 450px;
+  position: relative;
+  background-color: white;
+  border: 1px solid #e4dada;
+  }
+
+.add registerForm{
+  height: 500px;
+
+}
+
+.login-title{
+  text-align: center;
+  font-weight: bold;
+}
+
+.row{
+  margin-top: 5px;
+  text-align: center;
+  padding-left: 25px;
+  padding-right: 40px;
+}
+
+.col s12{
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+input {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+}
+
+.row .fields{
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+
+a:hover{
+  text-decoration: none;
+}
+
+.row-register{
+margin-top: -25px !important;    
+}
+
+a{
+  color: gray;
+}
+
+.form-error, .failure-form-error{
+  background-color: red;
+  margin-left: 22px !important;
+  margin-right: -15px !important;
+  font-size:15px;
+  color: rgb(218, 201, 201);
+  -webkit-animation: seconds 1.0s forwards;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-delay: 3s;
+  animation: seconds 1.0s forwards;
+  animation-iteration-count: 1;
+  animation-delay: 3s;
+  position: absolute;
+  width: 92%;
+}
+
+
+.col .row{
+  height: 75px;
+}
+
+.success-form-error{
+  background-color: #26a69a;
+  margin-left: 22px !important;
+  margin-right: -15px !important;
+  font-size:15px;
+  color: white;
+  -webkit-animation: seconds 1.0s forwards;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-delay: 3s;
+  animation: seconds 1.0s forwards;
+  animation-iteration-count: 1;
+  animation-delay: 3s;
+  position: absolute;
+  width: 92%; 
+}
+
+.error-message{
+  height: 40px;
+  padding: 8px 0;
+}
+
+@-webkit-keyframes seconds {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    left: -9999px; 
+  }
+}
+@keyframes seconds {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    left: -9999px; 
+  }
+}
+
+.form-background{
+  background-size: contain;
+  background-position: center;
+  position: fixed;
+  /* top: 0; */
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 50%;
+  background-color: #343a40!important;
+}
+</style>
+
+      <!-- Materialize CSS -->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+{{!-- <script src ="js/sign.js"></script> --}}
