@@ -94,10 +94,6 @@ routes.post('/login',  (req,res, next)=>{
 
     passport.authenticate('signin', (err, user, info) => {
 
-    if (err) { 
-        console.log(err);
-    }
-
     if (!user) { 
         return res.render('users/login1', {
             failureMsg: info.errorSignInMsg,
@@ -106,15 +102,6 @@ routes.post('/login',  (req,res, next)=>{
     }
 
     req.logIn(user, (err) => {
-        if (err) { 
-            console.log(err);
-        }
-
-        res.render('users/login1', {
-            successMsg: 'Logged in Successfully',
-            success: true
-        });
-
         res.redirect('/auctions');
     });
     
