@@ -1,57 +1,59 @@
-<div class="row">
-	<h1>Edit auction</h1>
-	<div class="col-6 offer-3">
-		<form action="/auctions/{{id}}?_method=PUT" method="POST" novalidate class="validated-form">
+<div class="container mt-4">
+	<div class="row">
+		<h1>Edit auction</h1>
+		<div class="col-6 offer-3">
+			<form action="/auctions/{{id}}?_method=PUT" method="POST" novalidate class="validated-form">
 
-			<!-- product name -->
-			<div class="mb-4">
-				<label class="form-label" for="title">Auction title:</label>
-				<input class="form-control" type="text" id="title" name="auction[title]" value="{{title}}">
-			</div>
-
-			<!-- describtion -->
-			<div class="mb-4">
-				<label class="form-label" for="description">Description: </label>
-				<textarea class="form-control" type="text" id="description"
-					name="auction[description]">{{description}} </textarea>
-			</div>
-
-			<!-- price -->
-			<div class="mb-4">
-				<label class="form-label" for="price">Price: </label>
-				<div class="input-group">
-					<span class="input-group-text" id="price-label">$</span>
-					<input type="text" class="form-control" id="price" placeholder="0"
-						aria-label="Amount (to the nearest dollar)" aria-describedby="price-label" name="auction[price]"
-						value="{{price}}">
+				<!-- product name -->
+				<div class="mb-4">
+					<label class="form-label" for="title">Auction title:</label>
+					<input class="form-control" type="text" id="title" name="auction[title]" value="{{title}}">
 				</div>
-			</div>
 
-			<!-- image -->
-			<div class="mb-4">
-				<label class="form-label" for="image">Image url: </label>
-				<input class="form-control" type="text" id="image" name="auction[image]" value="{{image}}">
-			</div>
+				<!-- describtion -->
+				<div class="mb-4">
+					<label class="form-label" for="description">Description: </label>
+					<textarea class="form-control" type="text" id="description"
+						name="auction[description]">{{description}} </textarea>
+				</div>
 
-			<!-- category -->
-			<select class="form-select form-select-lg mb-3" name="auction[category]"
-				aria-label=".form-select-sm example">
-				<option selected>category</option>
-				<option value="car">Cars</option>
-				<option value="electronic">Electronics and computer</option>
-				<option value="fashion">Fashion, health and beauty</option>
-				<option value="hobbies">Hobbies, Toys, Outdoors and games</option>
-				<option value="home">Home, Garden and Tools</option>
-				<option value="kitchen">kitchen and Dining</option>
-			</select>
+				<!-- price -->
+				<div class="mb-4">
+					<label class="form-label" for="price">Price: </label>
+					<div class="input-group">
+						<span class="input-group-text" id="price-label">$</span>
+						<input type="text" class="form-control" id="price" placeholder="0"
+							aria-label="Amount (to the nearest dollar)" aria-describedby="price-label"
+							name="auction[price]" value="{{price}}">
+					</div>
+				</div>
 
-			<div class="mb-3">
-				<button class="btn btn-success">Update auction</button>
-			</div>
-		</form>
+				<!-- image -->
+				<div class="mb-4">
+					<label class="form-label" for="image">Image url: </label>
+					<input class="form-control" type="text" id="image" name="auction[image]" value="{{image}}">
+				</div>
+
+				<!-- category -->
+				<select class="form-select form-select-lg mb-3" name="auction[category]"
+					aria-label=".form-select-sm example">
+					<option selected>category</option>
+					<option value="car">Cars</option>
+					<option value="electronic">Electronics and computer</option>
+					<option value="fashion">Fashion, health and beauty</option>
+					<option value="hobbies">Hobbies, Toys, Outdoors and games</option>
+					<option value="home">Home, Garden and Tools</option>
+					<option value="kitchen">kitchen and Dining</option>
+				</select>
+
+				<div class="mb-3">
+					<button class="btn btn-success">Update auction</button>
+				</div>
+			</form>
+		</div>
 	</div>
-</div>
 
-<div class="mb-3">
-	<a class="btn btn-primary" href="/auctions/{{id}}"> Cancel</a>
+	<div class="mb-3">
+		<a class="btn btn-primary" href="/auctions/{{id}}"> Cancel</a>
+	</div>
 </div>
