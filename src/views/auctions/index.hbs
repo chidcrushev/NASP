@@ -1,11 +1,26 @@
-<section class="text-center" style="background-image: url('https://images.unsplash.com/photo-1524535412680-21809efc44e7?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1063&q=80');
-	background-repeat: no-repeat; background-size: cover; height: 35vh; width: 100%; max-width: none;
-	background-attachment: fixed; background-size: 100% 100%;">
+<section class="text-center" style="background-image: url('https://images.unsplash.com/photo-1576267423429-569309b31e84?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1050&q=80');
+	background-repeat: no-repeat; background-size: cover; height: 65vh; width: 100%; max-width: 100%;
+	background-attachment: fixed; background-size: 100% 90%;">
 	<div class="row py-lg-5 text-center">
 		<div class="col-lg-6 col-md-8 mx-auto">
-			<h1 class="fw-light">Welcome {{username}}</h1>
-			<p class="lead text-muted">We care for your stuff</p>
-			<p>
+			<h1 class="fw-light" style=" margin: 0;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); color: white;">Welcome {{username}}</h1>
+			<p class="lead " style=" margin: 0;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); color:  white;">We care for your stuff</p>
+			<p style=" margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); color: white;">
 				<a href="/auctions/new" class="btn btn-info  my-2">Create an Auction</a>
 			</p>
 		</div>
@@ -46,34 +61,22 @@
 		<div class="album py-5">
 			<div class="col">
 				<div class="card shadow-sm">
-					<img class="bd-placeholder-img card-img-top" width="100%" height="225" role="img"
-						aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"
-						alt="" src="{{image}}">
+					<a href="/auctions/{{_id}}">
+						<img class="bd-placeholder-img card-img-top" width="100%" height="225" role="img"
+							aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"
+							alt="" src="{{image}}">
+					</a>
 					<div class="card-body">
-						<p class="card-title text-center">{{title}} </p>
-
+						<a href="/auctions/{{_id}}" style="color:#505050 ; text-decoration:none">
+							<p class="card-title text-center">{{title}} </p>
+						</a>
 						<div>
 							<p class="text-center"><span class="highestBidValue"
 									style="color:#42b449;">${{highestBid}}</span>
 							</p>
 							<p class="text-center"> <span class="highestBidderName"
 									id="highestBidderName">{{highestBidderName}}</span> </p>
-							<span class="setTime" id="setTime" style="visibility:hidden">{{setTime}}</span>
-							<i id="timeLeft" class="text-center">
-								<div class="timeLeft">
-									<span id="days" style="color:red;">uuuu</span>
-									<span id="hours" style="color:red;"></span>
-									<span id="minutes" style="color:red;"></span>
-									<span id="seconds" style="color:red;"></span>
-									<span id="end" style="color:red;"></span>
-								</div>
-							</i>
-						</div>
 
-						<div class="d-flex justify-content-between align-items-center">
-							<div>
-								<a class="btn btn-info" href="/auctions/{{_id}}">Bid!</a>
-							</div>
 						</div>
 					</div>
 				</div>
