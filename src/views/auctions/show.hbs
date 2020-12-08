@@ -66,7 +66,7 @@
 
 							{{#if (eq auction.highestBid 0)}}
 							<input class="form-control" type="number" id="myBid" name="auction[highestBid]"
-								aria-describedby="validationServer03Feedback" min={{auction.price}}>
+								aria-describedby="validationServer03Feedback" min={{auction.price}} required>
 
 							<div id="validationServer03Feedback" class="invalid-feedback">
 								Please provide bid value greater than {{auction.price}}

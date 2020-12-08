@@ -27,7 +27,7 @@
 		<div class="row">
 			<div class="input-field col s12 fields">
 				<i class="material-icons prefix">email</i>
-				<input id="email" type="email" name="email" class="validate">
+				<input id="email" type="email" name="email" class="validate" pattern= "^[a-z0-9]+@[nmsu.edu]{8}" required>
 				<label for="email">Email</label>
 			</div>
 		</div>
@@ -35,7 +35,7 @@
 			<div class="input-field col s12 fields">
 				<i class="material-icons prefix">password</i>
 
-				<input id="password" type="password" name="password" class="validate">
+				<input id="password" type="password" name="password" class="validate" required>
 				<label for="password">Password</label>
 			</div>
 		</div>
@@ -207,6 +207,7 @@ a{
 }
 
 .form-background{
+    background-image: linear-gradient(rgba(139, 0, 46, 0.685), rgba(152, 100, 106, 0.719)), url('https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Colorful-Geometric-Simple-Background-Image.jpg');
   background-size: contain;
   background-position: center;
   position: fixed;
