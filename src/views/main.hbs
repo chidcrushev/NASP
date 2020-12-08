@@ -64,6 +64,70 @@
 
     </script>
 
+    <script type="text/javascript">
+
+
+
+        //To handle the events of the submit button
+
+        //Logic for time
+        let timeLeft = document.getElementById("setTime");
+        time = timeLeft.innerHTML;
+        console.log(time)
+
+        // The data/time we want to countdown to
+        let countDownDate = new Date(time);
+        countDownDate.setDate(countDownDate.getDate());
+
+        let nw = new Date().getTime();
+        let tl = countDownDate.getTime() - nw;
+        if (tl < 0) {
+            document.getElementById("announceWinner").setAttribute("style", "display:block;visibility:visible")
+            document.getElementById("timeLeft").remove();
+            document.getElementById("myBidInput").remove();
+            document.getElementById("highestBidder").remove();
+        }
+
+        if (tl > 0) {
+            // Run myfunc every second
+            let myfunc = setInterval(function () {
+
+                let now = new Date().getTime();
+                let timeleft = countDownDate.getTime() - now;
+
+
+                // Calculating the days, hours, minutes and seconds left
+                let days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+
+                // Result is output to the specific element
+                document.getElementById("days").innerHTML = days + "d "
+                document.getElementById("hours").innerHTML = hours + "h "
+                document.getElementById("minutes").innerHTML = minutes + "m "
+                document.getElementById("seconds").innerHTML = seconds + "s "
+
+                // Display the message when countdown is over
+                if (timeleft < 0) {
+                    clearInterval(myfunc);
+                    document.getElementById("days").innerHTML = ""
+                    document.getElementById("hours").innerHTML = ""
+                    document.getElementById("minutes").innerHTML = ""
+                    document.getElementById("seconds").innerHTML = ""
+                    document.getElementById("end").innerHTML = "Auction over!!";
+                    document.getElementById("timeLeft").remove();
+                    document.getElementById("myBidInput").remove();
+                    document.getElementById("highestBidder").remove();
+
+
+                }
+            }, 1000);
+
+        }
+
+    </script>
+
 </body>
 
 </html>

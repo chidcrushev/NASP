@@ -25,7 +25,7 @@ routes.get("/register", (req, res) => {
 
 routes.post('/register', catchAsync(async (req, res, next) => {
     try {
-        const { email, username, password } = req.body;         
+        const { email, username, password } = req.body;
         const user = new User({ email, username, password });
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
@@ -35,38 +35,38 @@ routes.post('/register', catchAsync(async (req, res, next) => {
     } catch (e) {
 
         //Throw the error messages - Username taken already, Email already exists, Invalid password.
-                 
+
         //Retrieve the form details.
-         const email = req.body.email;
-        
-         
-         let query = {email:email};
-         
+        const email = req.body.email;
 
-         User.findOne(query, (err, user)=>{
-           
-             if(err){
-                 console.log("DataBase connection Error or Invalid Query")
-             }
-     
-                  
-             //If User found- send a flash message stating "Email-id already exists"
-             if(user){
-                 res.render('users/register1', {
-                     message: "Email already exists. Try another!",
-                     error: true
-                      
-                 })
-             }
 
-             if(user == null){
+        let query = { email: email };
+
+
+        User.findOne(query, (err, user) => {
+
+            if (err) {
+                console.log("DataBase connection Error or Invalid Query")
+            }
+
+
+            //If User found- send a flash message stating "Email-id already exists"
+            if (user) {
+                res.render('users/register1', {
+                    message: "Email already exists. Try another!",
+                    error: true
+
+                })
+            }
+
+            if (user == null) {
                 res.render('users/register1', {
                     message: "Username taken already!",
                     error: true
-                     
+
                 })
             }
-         })
+        })
 
     }
 }));
@@ -90,27 +90,27 @@ routes.get('/login', (request, response) => {
 
 
 
-routes.post('/login',  (req,res, next)=>{
+routes.post('/login', (req, res, next) => {
 
     passport.authenticate('signin', (err, user, info) => {
 
-    if (!user) { 
-        return res.render('users/login1', {
-            failureMsg: info.errorSignInMsg,
-            failure: true
-        })
-    }
+        if (!user) {
+            return res.render('users/login1', {
+                failureMsg: info.errorSignInMsg,
+                failure: true
+            })
+        }
 
-    req.logIn(user, (err) => {
-        res.redirect('/auctions');
-    });
-    
-})(req, res, next);
+        req.logIn(user, (err) => {
+            res.redirect('/auctions');
+        });
+
+    })(req, res, next);
 
 }, (err, req, res, next) => {
-// failure in login route
-// res.statusMessage = err.message;
-// return res.status(400).send();
+    // failure in login route
+    // res.statusMessage = err.message;
+    // return res.status(400).send();
 
 
 });
