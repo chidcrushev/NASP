@@ -2,9 +2,9 @@
 	<div class="row">
 		<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
 			<div class="col-6">
-				<div class=" mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+				<div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
 					<div class="my-3 py-3">
-						<h2 class="display-5" style="color:black">{{auction.title}}</h2>
+						<h2 class="display-5">{{auction.title}}</h2>
 						<img class="image" src="{{auction.image}}" width="400px" height="300px">
 						{{#if ( eq id ownerid)}}
 						<form action="/auctions/{{auction._id}}?_method=DELETE" method="POST">
@@ -15,75 +15,106 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-6 mt-5">
-				<div class="card text-white bg-dark mb-3">
-					<div class="card-header text-center"> Auctioneer : {{auction.owner.username}}</div>
-					<div class="card-body">
-						<h5 class="display-8 text-center">Base price: $ {{auction.price}}</h5>
+			<div class="col-6">
+				<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center">
+					<div class="my-3 py-3">
+						<div>
+							<p class="statusAuction" id="statusAuction" style="visibility:hidden">{{auction.status}}</p>
+							<!-- <img src="person.png" width="50px" height="50px"> -->
+							<p> Auctioneer : {{auction.owner.username}}</p>
+						</div>
+						<div>
+							<h5 class="display-8">Base price: $ {{auction.price}}</h5>
+						</div>
+						{{!-- <div>
+							<h5 class="display-8">Highest Bid $ <span class="highestBid"
+									id="highestBid">{{auction.highestBid}}</span></h5>
+						</div> --}}
 						<div id="highestBidder">
 							<!-- <img src="person.png" width="50px" height="50px"> -->
-							<p class="text-center"> Highest Bidder : <span class="highestBidderName"
+							<p> Highest Bidder : <span class="highestBidderName"
 									id="highestBidderName">{{auction.highestBidderName}}</span> $ <span
 									class="highestBidValue">{{auction.highestBid}}</span>
 							</p>
-							<span class="setTime" id="setTime" style="visibility:hidden">{{auction.setTime}}</span>
-							<div>
-								<i id="timeLeft">
-									<h6 class="display-12 text-center ">Time left: </h6>
-									<div class="timeLeft text-center" style="color:red;">
-										<span id="days"></span>
-										<span id="hours"></span>
-										<span id="minutes"></span>
-										<span id="seconds"></span>
-										<span id="end"></span>
+						</div>
 
-									</div>
-								</i>
+						<span class="setTime" id="setTime" style="visibility:hidden">{{auction.setTime}}</span>
+
+						<i id="timeLeft">
+							<h6 class="display-12 ">Time left: </h6>
+							<div class="timeLeft">
+								<span id="days"></span>
+								<span id="hours"></span>
+								<span id="minutes"></span>
+								<span id="seconds"></span>
+								<span id="end"></span>
+
 							</div>
-						</div>
-					</div>
+						</i>
 
-					{{#if ( ne id ownerid)}}
-					<form action="/auctions/{{auction._id}}/updateBid?_method=PUT" method="POST" novalidate
-						class="validated-form mr-5 ml-5">
+						<div style="clear: right;" />
 
-						<div class="mb-4 text-center">
-							<label class="form-label" for="myBid">My Bid:</label>
-							<input class="form-control" type="text" id="myBid" name="auction[highestBid]">
-						</div>
-						<div class="d-grid gap-5 col-2 mx-auto">
-							<button class="btn btn-success ">Bid!</button>
-						</div>
-					</form>
-					{{/if}}
-				</div>
-
-
-
-				<div style="clear: right;" />
-
-				{{!-- <form action="/auctions/{{id}}?_method=PUT" method="POST" novalidate class="validated-form">
+						{{!-- <form action="/auctions/{{id}}?_method=PUT" method="POST" novalidate class="validated-form">
 							<label for="fname">My Bid:</label><br>
 							<input class="input" type="number" id="fname" name="auction[highestBid]"></br>
 							<button type="button" id ="bidSubmitBtn" class="btn btn-success">Submit</button>
 						</form> --}}
+						<form action="/auctions/{{auction._id}}/updateBid?_method=PUT" method="POST" novalidate
+							class="needs-validation" id="myBidInput">
+							{{#if ( ne id ownerid)}}
+							<div class="mb-4">
+								<label class="form-label" for="myBid">My Bid:</label>
 
-				{{#if ( eq id ownerid)}}
-				<a class="card-link btn btn-info mt-3 " href="/auctions/{{auction._id}}/sell"> Sell</a>
-				<a class="card-link btn btn-danger mt-3" href="/auctions/{{auction._id}}/end"> End</a>
-				{{/if}}
+								{{#if (eq auction.highestBid 0)}}
+								<input class="form-control" type="number" id="myBid" name="auction[highestBid]"
+									aria-describedby="validationServer03Feedback" min={{auction.price}} required>
 
-				<div id="announceWinner" style="visibility:hidden;display:hidden">
-					<!-- <img src="person.png" width="50px" height="50px"> -->
-					<h6> The auction is over!! The winner is {{auction.highestBidderName}} with Bid
-						${{auction.highestBid}}</h6>
+								<div id="validationServer03Feedback" class="invalid-feedback">
+									Please provide bid value greater than {{auction.price}}
+								</div>
+								{{else}}
+								<input class="form-control" type="number" id="myBid" name="auction[highestBid]"
+									aria-describedby="validationServer03Feedback" min={{auction.highestBid}} required>
+
+								<div id="validationServer03Feedback" class="invalid-feedback">
+									Please provide bid value greater than {{auction.highestBid}}
+								</div>
+								{{/if}}
+
+
+
+
+							</div>
+							<button class="btn btn-success">Bid!</button>
+							{{/if}}
+
+
+							{{#if ( eq id ownerid)}}
+							<div class="mb-4">
+								<label class="form-label" for="myBid">Lower price:</label>
+								<input class="form-control" type="text" id="myBid" name="auction[price]">
+							</div>
+							<button class="btn btn-success">Change price</button>
+							{{/if}}
+
+
+						</form>
+						{{#if ( eq id ownerid)}}
+						<a class="card-link btn btn-info mt-3" href="/auctions/{{auction._id}}/sell"> Sell</a>
+						<a class="card-link btn btn-danger mt-3" href="/auctions/{{auction._id}}/end"> End</a>
+						{{/if}}
+
+						<div id="announceWinner" style="visibility:hidden;display:hidden">
+							<!-- <img src="person.png" width="50px" height="50px"> -->
+							<h6> The auction is over!! The winner is {{auction.highestBidderName}} with Bid
+								${{auction.highestBid}}</h6>
+						</div>
+
+					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
-
-
 	<div class="card border-info mb-3 text-center">
 		<div class="card-header">Description</div>
 		<div class="card-body">
@@ -112,37 +143,36 @@
 		</form> -->
 	</div>
 	{{/each}}
+</div>
+<!-- End Reviews for auctionner -->
 
-	<!-- End Reviews for auctionner -->
+<!-- leave a review for auctionner -->
 
-	<!-- leave a review for auctionner -->
+<div class="card border-info mb-3 text-center">
+	<div class="card-header text-center" style="font-size:40px;">Leave a review</div>
+	<div class="card-body">
+		<form action="/auctions/{{auction._id}}/reviews" method="POST" class="mb-4 needs-validation" novalidate>
+			<div class="mb-4">
+				<label for="Range" class="form-label">Rating</label>
+				<input type="range" class="form-range" min="0" max="5" name="review[rating]" id="Range">
+			</div>
 
-	<div class="card border-info mb-3 text-center">
-		<div class="card-header text-center" style="font-size:40px;">Leave a review</div>
-		<div class="card-body">
-			<form action="/auctions/{{auction._id}}/reviews" method="POST" class="mb-4 needs-validation" novalidate>
-				<div class="mb-4">
-					<label for="Range" class="form-label">Rating</label>
-					<input type="range" class="form-range" min="0" max="5" name="review[rating]" id="Range">
+			<div class="mb-4">
+				<label class="form-label" for="review">Review</label>
+				<textarea class="form-control" name="review[body]" id="review" cols="15" rows="3" required></textarea>
+				<div class="valid-feedback">
+					Looks good!
 				</div>
+			</div>
 
-				<div class="mb-4">
-					<label class="form-label" for="review">Review</label>
-					<textarea class="form-control" name="review[body]" id="review" cols="15" rows="3"
-						required></textarea>
-					<div class="valid-feedback">
-						Looks good!
-					</div>
-				</div>
-
-				<button class="btn btn-success">Submit</button>
-			</form>
-		</div>
+			<button class="btn btn-success">Submit</button>
+		</form>
 	</div>
-	<!-- instead fo {{auction._id}} put {{currentUser._id}} -->
+</div>
+<!-- instead fo {{auction._id}} put {{currentUser._id}} -->
 
 
-	<!-- get autionner reviews
+<!-- get autionner reviews
 	loop over them  
 	{{#each auction.owner.reviews}}
 	<p>Review: {{body}}</p>

@@ -213,7 +213,8 @@ routes.put("/auctions/:id", isLoggedIn, async (req, res) => {
 routes.put("/auctions/:id/updateBid", isLoggedIn, async (req, res) => {
     const { id } = req.params;
     const highestBid = req.body.auction;
-    const auction = await Auction.findByIdAndUpdate(id, { highestBidderName: req.user.username, highestBid: highestBid.highestBid });
+    console.log(req.user);
+    const auction = await Auction.findByIdAndUpdate(id, { highestBidderName: req.user.email, highestBid: highestBid.highestBid });
     res.redirect(`/auctions/${auction._id}`)
 });
 

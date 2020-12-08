@@ -71,9 +71,21 @@
 							<p class="card-title text-center">{{title}} </p>
 						</a>
 						<div>
+
+							{{#if (eq auction.highestBid 0)}}	
+
 							<p class="text-center"><span class="highestBidValue"
-									style="color:#42b449;">${{highestBid}}</span>
+									style="color:#42b449;">Base price: ${{price}}</span>
 							</p>
+
+							{{else}}
+
+							<p class="text-center"><span class="highestBidValue"
+							style="color:#42b449;">Highest Bid: ${{highestBid}}</span>
+							</p>
+
+							{{/if}}
+
 							<p class="text-center"> <span class="highestBidderName"
 									id="highestBidderName">{{highestBidderName}}</span> </p>
 
