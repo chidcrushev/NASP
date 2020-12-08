@@ -50,14 +50,25 @@
 						aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"
 						alt="" src="{{image}}">
 					<div class="card-body">
-						<p class="card-title">{{title}} </p>
+						<p class="card-title text-center">{{title}} </p>
+						<span class="setTime" id="setTime" style="visibility:hidden">{{setTime}}</span>
+						<i id="timeLeft" class="text-center">
+							<div class="timeLeft">
+								<span id="days" style="color:red;"></span>
+								<span id="hours" style="color:red;"></span>
+								<span id="minutes" style="color:red;"></span>
+								<span id="seconds" style="color:red;"></span>
+								<span id="end" style="color:red;"></span>
+							</div>
+						</i>
 						<div class="d-flex justify-content-between align-items-center">
 							<div>
-								<a class="btn btn-primary" href="/auctions/{{_id}}">View</a>
+								<a class="btn btn-primary" href="/auctions/{{_id}}">Bid!</a>
 							</div>
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 		{{/each}}

@@ -1,70 +1,72 @@
-<div class="row ml-5 mt-4">
-	<h1>Create an auction</h1>
-	<div class="col-6 offer-3">
-		<form action="/auctions" method="POST" class="needs-validation" novalidate>
-			<!-- product name -->
-			<div class="mb-4">
-				<label class="form-label" for="title">Auction title:</label>
-				<input class="form-control" type="text" id="title" name="auction[title]" required>
-			</div>
-
-			<!-- describtion -->
-			<div class="mb-4">
-				<label class="form-label" for="description">Description: </label>
-				<textarea class="form-control" type="text" id="description" name="auction[description]"
-					required></textarea>
-			</div>
-
-			<!-- price -->
-			<div class="mb-4">
-				<label class="form-label" for="price">Price: </label>
-				<div class="input-group">
-					<span class="input-group-text" id="price-label">$</span>
-					<input type="text" class="form-control" id="price" placeholder="0"
-						aria-label="Amount (to the nearest dollar)" aria-describedby="price-label" name="auction[price]"
-						required>
+<div class="container">
+	<div class="row ml-5 mt-4">
+		<h1>Create an auction</h1>
+		<div class="col-6 offer-3">
+			<form action="/auctions" method="POST" class="needs-validation" novalidate>
+				<!-- product name -->
+				<div class="mb-4">
+					<label class="form-label" for="title">Auction title:</label>
+					<input class="form-control" type="text" id="title" name="auction[title]" required>
 				</div>
-			</div>
 
-			<!-- image -->
-			<div class="mb-4">
-				<label class="form-label" for="image">Image url: </label>
-				<input class="form-control" type="text" id="image" name="auction[image]" required>
-			</div>
+				<!-- describtion -->
+				<div class="mb-4">
+					<label class="form-label" for="description">Description: </label>
+					<textarea class="form-control" type="text" id="description" name="auction[description]"
+						required></textarea>
+				</div>
+
+				<!-- price -->
+				<div class="mb-4">
+					<label class="form-label" for="price">Price: </label>
+					<div class="input-group">
+						<span class="input-group-text" id="price-label">$</span>
+						<input type="text" class="form-control" id="price" placeholder="0"
+							aria-label="Amount (to the nearest dollar)" aria-describedby="price-label"
+							name="auction[price]" required>
+					</div>
+				</div>
+
+				<!-- image -->
+				<div class="mb-4">
+					<label class="form-label" for="image">Image url: </label>
+					<input class="form-control" type="text" id="image" name="auction[image]" required>
+				</div>
 
 
 
-			<!-- time set -->
-			<label class="form-label" for="setTime">Set Time: </label>
-			<select class="form-select form-select-lg mb-3" name="auction[setTime]">
-				<option value="1" selected>1 day</option>
-				<option value="2">2 days</option>
-				<option value="3">3 days</option>
-				<option value="4">4 days</option>
-				<option value="5">5 days</option>
-				<option value="6">6 days</option>
-			</select>
+				<!-- time set -->
+				<label class="form-label" for="setTime">Set Time: </label>
+				<select class="form-select form-select-lg mb-3" name="auction[setTime]">
+					<option value="1" selected>1 day</option>
+					<option value="2">2 days</option>
+					<option value="3">3 days</option>
+					<option value="4">4 days</option>
+					<option value="5">5 days</option>
+					<option value="6">6 days</option>
+				</select>
 
-			<!-- category -->
-			<label class="form-label" for="category">Category: </label>
-			<select class="form-select form-select-lg mb-3" name="auction[category]"
-				aria-label=".form-select-sm example">
-				<option value="car">Cars</option>
-				<option value="electronic">Electronics and computer</option>
-				<option value="fashion">Fashion, health and beauty</option>
-				<option value="hobbies">Hobbies, Toys, Outdoors and games</option>
-				<option value="home">Home, Garden and Tools</option>
-				<option value="kitchen">kitchen and Dining</option>
-			</select>
+				<!-- category -->
+				<label class="form-label" for="category">Category: </label>
+				<select class="form-select form-select-lg mb-3" name="auction[category]"
+					aria-label=".form-select-sm example">
+					<option value="car">Cars</option>
+					<option value="electronic">Electronics and computer</option>
+					<option value="fashion">Fashion, health and beauty</option>
+					<option value="hobbies">Hobbies, Toys, Outdoors and games</option>
+					<option value="home">Home, Garden and Tools</option>
+					<option value="kitchen">kitchen and Dining</option>
+				</select>
 
-			<!-- create -->
+				<!-- create -->
+				<div class="mb-3">
+					<button class="btn btn-success">Create the auction</button>
+				</div>
+			</form>
 			<div class="mb-3">
-				<button class="btn btn-success">Create the auction</button>
+				<a class="btn btn-primary" href="/auctions">Cancel</a>
 			</div>
-		</form>
-		<div class="mb-3">
-			<a class="btn btn-primary" href="/auctions">Cancel</a>
-		</div>
 
+		</div>
 	</div>
 </div>

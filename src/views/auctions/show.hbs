@@ -1,148 +1,149 @@
-<div class="row">
-	<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-		<div class="col-6">
-			<div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-				<div class="my-3 py-3">
-					<h2 class="display-5">{{auction.title}}</h2>
-					<img class="image" src="{{auction.image}}" width="400px" height="300px">
-					{{#if ( eq id ownerid)}}
-					<form action="/auctions/{{auction._id}}?_method=DELETE" method="POST">
-						<button class="btn btn-danger mt-3"> Delete Auction</button>
-						<a class="card-link btn btn-info mt-3" href="/auctions/{{auction._id}}/edit"> Edit</a>
-					</form>
-					{{/if}}
+<div class="container">
+	<div class="row">
+		<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+			<div class="col-6">
+				<div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+					<div class="my-3 py-3">
+						<h2 class="display-5">{{auction.title}}</h2>
+						<img class="image" src="{{auction.image}}" width="400px" height="300px">
+						{{#if ( eq id ownerid)}}
+						<form action="/auctions/{{auction._id}}?_method=DELETE" method="POST">
+							<button class="btn btn-danger mt-3"> Delete Auction</button>
+							<a class="card-link btn btn-info mt-3" href="/auctions/{{auction._id}}/edit"> Edit</a>
+						</form>
+						{{/if}}
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-6">
-			<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center">
-				<div class="my-3 py-3">
-					<div>
-						<p class="statusAuction" id="statusAuction" style="visibility:hidden">{{auction.status}}</p>
-						<!-- <img src="person.png" width="50px" height="50px"> -->
-						<p> Auctioneer : {{auction.owner.username}}</p>
-					</div>
-					<div>
-						<h5 class="display-8">Base price: $ {{auction.price}}</h5>
-					</div>
-					{{!-- <div>
-						<h5 class="display-8">Highest Bid $ <span class="highestBid"
-								id="highestBid">{{auction.highestBid}}</span></h5>
-					</div> --}}
-					<div id="highestBidder">
-						<!-- <img src="person.png" width="50px" height="50px"> -->
-						<p> Highest Bidder : <span class="highestBidderName"
-								id="highestBidderName">{{auction.highestBidderName}}</span> $ <span
-								class="highestBidValue">{{auction.highestBid}}</span>
-						</p>
-					</div>
-
-					<span class="setTime" id="setTime" style="visibility:hidden">{{auction.setTime}}</span>
-
-					<i id="timeLeft">
-						<h6 class="display-12 ">Time left: </h6>
-						<div class="timeLeft">
-							<span id="days"></span>
-							<span id="hours"></span>
-							<span id="minutes"></span>
-							<span id="seconds"></span>
-							<span id="end"></span>
-
+			<div class="col-6">
+				<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center">
+					<div class="my-3 py-3">
+						<div>
+							<p class="statusAuction" id="statusAuction" style="visibility:hidden">{{auction.status}}</p>
+							<!-- <img src="person.png" width="50px" height="50px"> -->
+							<p> Auctioneer : {{auction.owner.username}}</p>
 						</div>
-					</i>
+						<div>
+							<h5 class="display-8">Base price: $ {{auction.price}}</h5>
+						</div>
+						{{!-- <div>
+							<h5 class="display-8">Highest Bid $ <span class="highestBid"
+									id="highestBid">{{auction.highestBid}}</span></h5>
+						</div> --}}
+						<div id="highestBidder">
+							<!-- <img src="person.png" width="50px" height="50px"> -->
+							<p> Highest Bidder : <span class="highestBidderName"
+									id="highestBidderName">{{auction.highestBidderName}}</span> $ <span
+									class="highestBidValue">{{auction.highestBid}}</span>
+							</p>
+						</div>
 
-					<div style="clear: right;" />
+						<span class="setTime" id="setTime" style="visibility:hidden">{{auction.setTime}}</span>
 
-					{{!-- <form action="/auctions/{{id}}?_method=PUT" method="POST" novalidate class="validated-form">
-						<label for="fname">My Bid:</label><br>
-						<input class="input" type="number" id="fname" name="auction[highestBid]"></br>
-						<button type="button" id ="bidSubmitBtn" class="btn btn-success">Submit</button>
-					</form> --}}
-					<form action="/auctions/{{auction._id}}/updateBid?_method=PUT" method="POST" novalidate
-						class="needs-validation" id="myBidInput">
-						{{#if ( ne id ownerid)}}
-						<div class="mb-4">
-							<label class="form-label" for="myBid">My Bid:</label>
+						<i id="timeLeft">
+							<h6 class="display-12 ">Time left: </h6>
+							<div class="timeLeft">
+								<span id="days"></span>
+								<span id="hours"></span>
+								<span id="minutes"></span>
+								<span id="seconds"></span>
+								<span id="end"></span>
 
-							{{#if (eq auction.highestBid 0)}}
-							<input class="form-control" type="number" id="myBid" name="auction[highestBid]"
-								aria-describedby="validationServer03Feedback" min={{auction.price}} required>
-
-							<div id="validationServer03Feedback" class="invalid-feedback">
-								Please provide bid value greater than {{auction.price}}
 							</div>
-							{{else}}
-							<input class="form-control" type="number" id="myBid" name="auction[highestBid]"
-								aria-describedby="validationServer03Feedback" min={{auction.highestBid}}>
+						</i>
 
-							<div id="validationServer03Feedback" class="invalid-feedback">
-								Please provide bid value greater than {{auction.highestBid}}
+						<div style="clear: right;" />
+
+						{{!-- <form action="/auctions/{{id}}?_method=PUT" method="POST" novalidate class="validated-form">
+							<label for="fname">My Bid:</label><br>
+							<input class="input" type="number" id="fname" name="auction[highestBid]"></br>
+							<button type="button" id ="bidSubmitBtn" class="btn btn-success">Submit</button>
+						</form> --}}
+						<form action="/auctions/{{auction._id}}/updateBid?_method=PUT" method="POST" novalidate
+							class="needs-validation" id="myBidInput">
+							{{#if ( ne id ownerid)}}
+							<div class="mb-4">
+								<label class="form-label" for="myBid">My Bid:</label>
+
+								{{#if (eq auction.highestBid 0)}}
+								<input class="form-control" type="number" id="myBid" name="auction[highestBid]"
+									aria-describedby="validationServer03Feedback" min={{auction.price}}>
+
+								<div id="validationServer03Feedback" class="invalid-feedback">
+									Please provide bid value greater than {{auction.price}}
+								</div>
+								{{else}}
+								<input class="form-control" type="number" id="myBid" name="auction[highestBid]"
+									aria-describedby="validationServer03Feedback" min={{auction.highestBid}}>
+
+								<div id="validationServer03Feedback" class="invalid-feedback">
+									Please provide bid value greater than {{auction.highestBid}}
+								</div>
+								{{/if}}
+
+
+
+
 							</div>
+							<button class="btn btn-success">Bid!</button>
 							{{/if}}
 
 
+							{{#if ( eq id ownerid)}}
+							<div class="mb-4">
+								<label class="form-label" for="myBid">Lower price:</label>
+								<input class="form-control" type="text" id="myBid" name="auction[price]">
+							</div>
+							<button class="btn btn-success">Change price</button>
+							{{/if}}
 
 
-						</div>
-						<button class="btn btn-success">Bid!</button>
-						{{/if}}
-
-
+						</form>
 						{{#if ( eq id ownerid)}}
-						<div class="mb-4">
-							<label class="form-label" for="myBid">Lower price:</label>
-							<input class="form-control" type="text" id="myBid" name="auction[price]">
-						</div>
-						<button class="btn btn-success">Change price</button>
+						<a class="card-link btn btn-info mt-3" href="/auctions/{{auction._id}}/sell"> Sell</a>
+						<a class="card-link btn btn-danger mt-3" href="/auctions/{{auction._id}}/end"> End</a>
 						{{/if}}
 
+						<div id="announceWinner" style="visibility:hidden;display:hidden">
+							<!-- <img src="person.png" width="50px" height="50px"> -->
+							<h6> The auction is over!! The winner is {{auction.highestBidderName}} with Bid
+								${{auction.highestBid}}</h6>
+						</div>
 
-					</form>
-					{{#if ( eq id ownerid)}}
-					<a class="card-link btn btn-info mt-3" href="/auctions/{{auction._id}}/sell"> Sell</a>
-					<a class="card-link btn btn-danger mt-3" href="/auctions/{{auction._id}}/end"> End</a>
-					{{/if}}
-
-					<div id="announceWinner" style="visibility:hidden;display:hidden">
-						<!-- <img src="person.png" width="50px" height="50px"> -->
-						<h6> The auction is over!! The winner is {{auction.highestBidderName}} with Bid
-							${{auction.highestBid}}</h6>
 					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<div class="row">
-	<div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-		<div class="my-3 py-3">
-			<h2 class="display-5">Description</h2>
-			<p class="lead">{{auction.description}}</p>
+	<div class="row">
+		<div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+			<div class="my-3 py-3">
+				<h2 class="display-5">Description</h2>
+				<p class="lead">{{auction.description}}</p>
+			</div>
 		</div>
 	</div>
-</div>
 
-<!-- <h1>the delete cant get the auction._id</h1> -->
-<h2>Reviews</h2>
-{{#each auction.reviews }}
-<div class="card mb-4">
-	<div class="card-header">
-		Name {{review.author.username}}
+	<!-- <h1>the delete cant get the auction._id</h1> -->
+	<h2>Reviews</h2>
+	{{#each auction.reviews }}
+	<div class="card mb-4">
+		<div class="card-header">
+			Name {{review.author.username}}
+		</div>
+		<div class="card-body">
+			<blockquote class="blockquote mb-0">
+				<p>Review: {{body}}</p>
+				<p>Rating: {{rating}}</p>
+			</blockquote>
+		</div>
+		<!-- Delete review button -->
+		<!-- <form class="ml-5" action="/auctions/{{auction._id}}/{{review._id}}?_method=DELETE" method="POST">
+			<button class="btn btn-danger mt-3"> Delete </button>
+		</form> -->
 	</div>
-	<div class="card-body">
-		<blockquote class="blockquote mb-0">
-			<p>Review: {{body}}</p>
-			<p>Rating: {{rating}}</p>
-		</blockquote>
-	</div>
-	<!-- Delete review button -->
-	<!-- <form class="ml-5" action="/auctions/{{auction._id}}/{{review._id}}?_method=DELETE" method="POST">
-		<button class="btn btn-danger mt-3"> Delete </button>
-	</form> -->
-</div>
-{{/each}}
+	{{/each}}
 </div>
 <!-- End Reviews for auctionner -->
 
@@ -167,73 +168,11 @@
 </form>
 
 <!-- get autionner reviews
-loop over them  
-{{#each auction.owner.reviews}}
-<p>Review: {{body}}</p>
-<p>Rating: {{rating}}</p>
-{{/each}}-->
+	loop over them  
+	{{#each auction.owner.reviews}}
+	<p>Review: {{body}}</p>
+	<p>Rating: {{rating}}</p>
+	{{/each}}-->
 
 
-<script type="text/javascript">
-
-
-
-	//To handle the events of the submit button
-
-	//Logic for time
-	let timeLeft = document.getElementById("setTime");
-	time = timeLeft.innerHTML;
-	console.log(time)
-
-	// The data/time we want to countdown to
-	let countDownDate = new Date(time);
-	countDownDate.setDate(countDownDate.getDate());
-
-	let nw = new Date().getTime();
-	let tl = countDownDate.getTime() - nw;
-	if (tl < 0) {
-		document.getElementById("announceWinner").setAttribute("style", "display:block;visibility:visible")
-		document.getElementById("timeLeft").remove();
-		document.getElementById("myBidInput").remove();
-		document.getElementById("highestBidder").remove();
-	}
-
-	if (tl > 0) {
-		// Run myfunc every second
-		let myfunc = setInterval(function () {
-
-			let now = new Date().getTime();
-			let timeleft = countDownDate.getTime() - now;
-
-
-			// Calculating the days, hours, minutes and seconds left
-			let days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
-			let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-			let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
-			let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
-
-			// Result is output to the specific element
-			document.getElementById("days").innerHTML = days + "d "
-			document.getElementById("hours").innerHTML = hours + "h "
-			document.getElementById("minutes").innerHTML = minutes + "m "
-			document.getElementById("seconds").innerHTML = seconds + "s "
-
-			// Display the message when countdown is over
-			if (timeleft < 0) {
-				clearInterval(myfunc);
-				document.getElementById("days").innerHTML = ""
-				document.getElementById("hours").innerHTML = ""
-				document.getElementById("minutes").innerHTML = ""
-				document.getElementById("seconds").innerHTML = ""
-				document.getElementById("end").innerHTML = "Auction over!!";
-				document.getElementById("timeLeft").remove();
-				document.getElementById("myBidInput").remove();
-				document.getElementById("highestBidder").remove();
-
-
-			}
-		}, 1000);
-
-	}
-
-</script>
+</div>
