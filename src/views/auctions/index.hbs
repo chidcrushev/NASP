@@ -51,16 +51,25 @@
 						alt="" src="{{image}}">
 					<div class="card-body">
 						<p class="card-title text-center">{{title}} </p>
-						<span class="setTime" id="setTime" style="visibility:hidden">{{setTime}}</span>
-						<i id="timeLeft" class="text-center">
-							<div class="timeLeft">
-								<span id="days" style="color:red;"></span>
-								<span id="hours" style="color:red;"></span>
-								<span id="minutes" style="color:red;"></span>
-								<span id="seconds" style="color:red;"></span>
-								<span id="end" style="color:red;"></span>
-							</div>
-						</i>
+
+						<div>
+							<p class="text-center"><span class="highestBidValue"
+									style="color:#42b449;">${{highestBid}}</span>
+							</p>
+							<p class="text-center"> <span class="highestBidderName"
+									id="highestBidderName">{{highestBidderName}}</span> </p>
+							<span class="setTime" id="setTime" style="visibility:hidden">{{setTime}}</span>
+							<i id="timeLeft" class="text-center">
+								<div class="timeLeft">
+									<span id="days" style="color:red;">uuuu</span>
+									<span id="hours" style="color:red;"></span>
+									<span id="minutes" style="color:red;"></span>
+									<span id="seconds" style="color:red;"></span>
+									<span id="end" style="color:red;"></span>
+								</div>
+							</i>
+						</div>
+
 						<div class="d-flex justify-content-between align-items-center">
 							<div>
 								<a class="btn btn-info" href="/auctions/{{_id}}">Bid!</a>
